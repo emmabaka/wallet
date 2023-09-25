@@ -1,0 +1,28 @@
+.card {
+  width: 374px;
+  min-height: 201px;
+  padding: 25px 20px 16px;
+  border-radius: 20px;
+  background: #fda085;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  padding-bottom: 8px;
+}
+
+.balance {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.5px;
+  padding-bottom: 8px;
+}
+
+.more {
+  padding-top: 40px;
+  text-align: end;
+}
