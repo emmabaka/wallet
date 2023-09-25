@@ -1,0 +1,118 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 358px;
+  min-height: 337px;
+  padding: 32px 20px;
+  border-radius: 20px;
+  box-shadow: 0px 22px 35px 0px rgba(0, 0, 0, 0.08);
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.label {
+  display: block;
+  padding-bottom: 10px;
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  padding: 16px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.14px;
+
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+
+  &:focus {
+    border: 1.4px solid #fda085;
+    color: #fda085;
+  }
+}
+
+.amount {
+  padding-left: 27px;
+
+  &::-webkit-inner-spin-button {
+    appearance: none;
+  }
+
+  &:focus {
+    font-size: 14px;
+    font-weight: 600;
+
+    + .dollar {
+      font-weight: 600;
+      color: #fda085;
+    }
+  }
+}
+
+.select {
+  appearance: none;
+}
+
+.date {
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    display: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    background-image: url("../../../public/calendar.svg");
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  &:focus {
+    + .selectedDate {
+      color: #fda085;
+    }
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 40px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+}
+
+.dollar {
+  position: absolute;
+  top: 41px;
+  left: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.14px;
+  color: #666;
+}
+
+.selectedDate {
+  position: absolute;
+  top: 40px;
+  left: 16px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.14px;
+}
