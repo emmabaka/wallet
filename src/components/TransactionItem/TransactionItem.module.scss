@@ -1,0 +1,49 @@
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 8px;
+  background: rgba(253, 160, 133, 0.2);
+}
+
+.category {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  text-transform: capitalize;
+}
+
+.date {
+  color: #666;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.26px;
+  text-transform: capitalize;
+}
+
+.amount {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  text-transform: capitalize;
+  text-align: right;
+  flex: 1;
+}
+
+.expense {
+  color: #f95b51;
+}
+
+.income {
+  color: #25a969;
+}

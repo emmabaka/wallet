@@ -12,40 +12,40 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
     .toReversed()
     .join("-");
 
-  const [selectedStatus, setSelectedStatus] = useState<string>("expense");
+  const [status, setStatus] = useState<string>("expense");
   const [date, setDate] = useState<string>(currDate);
-  const [category, setCategory] = useState<string>("Without category");
+  const [category, setCategory] = useState<string>("expense");
   const [amount, setAmount] = useState<string>("");
 
   useEffect(() => {
-    selectedStatus === "expense"
+    status === "expense"
       ? setCategory(expenseCategories[0])
       : setCategory(incomeCategories[0]);
-  }, [selectedStatus]);
+  }, [status]);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const transaction = { selectedStatus, date, category, amount };
-    const history = localStorage.getItem("history") || "[]";
-    const newHistory = JSON.parse(history);
-    newHistory.push(transaction);
-    localStorage.setItem("history", JSON.stringify([...newHistory]));
+    const transaction = { status, date, category, amount, id: new Date() };
+    const history = JSON.parse(localStorage.getItem("history") || "[]");
+    localStorage.setItem("history", JSON.stringify([transaction, ...history]));
 
     const newTotal =
-      selectedStatus === "expense"
+      status === "expense"
         ? Number(localStorage.getItem("total")) - Number(amount)
         : Number(localStorage.getItem("total")) + Number(amount);
     localStorage.setItem("total", String(newTotal));
 
     setDate(currDate);
-    setCategory("Without category");
+    setCategory(
+      status === "expense" ? expenseCategories[0] : incomeCategories[0]
+    );
     setAmount("");
   };
 
   const handleStatusChange = (e: {
     target: { value: SetStateAction<string> };
   }) => {
-    setSelectedStatus(e.target.value);
+    setStatus(e.target.value);
   };
 
   return (
@@ -61,7 +61,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
             type="radio"
             name="status"
             value="expense"
-            checked={selectedStatus === "expense"}
+            checked={status === "expense"}
             onChange={handleStatusChange}
           />
           <label className={s.radioLabel} htmlFor="expense">
@@ -75,7 +75,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
             type="radio"
             name="status"
             value="income"
-            checked={selectedStatus === "income"}
+            checked={status === "income"}
             onChange={handleStatusChange}
           />
           <label className={s.radioLabel} htmlFor="income">
@@ -94,17 +94,13 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option disabled value="Without category">
-            Select category
-          </option>
-          {(selectedStatus === "expense"
-            ? expenseCategories
-            : incomeCategories
-          ).map((item) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
+          {(status === "expense" ? expenseCategories : incomeCategories).map(
+            (item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            )
+          )}
         </select>
         <div className={s.arrow}>
           <ArrowSVG />
