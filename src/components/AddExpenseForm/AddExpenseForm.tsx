@@ -12,17 +12,10 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
     .toReversed()
     .join("-");
 
-  const [selectedStatus, setSelectedStatus] = useState("expense");
+  const [selectedStatus, setSelectedStatus] = useState<string>("expense");
   const [date, setDate] = useState<string>(currDate);
-  const [category, setCategory] = useState<string>(expenseCategories[0]);
+  const [category, setCategory] = useState<string>("Without category");
   const [amount, setAmount] = useState<string>("");
-
-  const handleStatusChange = (e: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setSelectedStatus(e.target.value);
-  };
-  console.log(category);
 
   useEffect(() => {
     selectedStatus === "expense"
@@ -30,8 +23,36 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       : setCategory(incomeCategories[0]);
   }, [selectedStatus]);
 
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    const transaction = { selectedStatus, date, category, amount };
+    const history = localStorage.getItem("history") || "[]";
+    const newHistory = JSON.parse(history);
+    newHistory.push(transaction);
+    localStorage.setItem("history", JSON.stringify([...newHistory]));
+
+    const newTotal =
+      selectedStatus === "expense"
+        ? Number(localStorage.getItem("total")) - Number(amount)
+        : Number(localStorage.getItem("total")) + Number(amount);
+    localStorage.setItem("total", String(newTotal));
+
+    setDate(currDate);
+    setCategory("Without category");
+    setAmount("");
+  };
+
+  const handleStatusChange = (e: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setSelectedStatus(e.target.value);
+  };
+
   return (
-    <form className={addExpense ? `${s.active} ${s.form}` : s.form}>
+    <form
+      className={addExpense ? `${s.active} ${s.form}` : s.form}
+      onSubmit={handleSubmit}
+    >
       <div className={s.radioListWrap}>
         <div className={s.radioWrap}>
           <input
@@ -73,6 +94,9 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
+          <option disabled value="Without category">
+            Select category
+          </option>
           {(selectedStatus === "expense"
             ? expenseCategories
             : incomeCategories
