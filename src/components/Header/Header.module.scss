@@ -1,0 +1,33 @@
+.header {
+  position: relative;
+  padding-top: 35px;
+  padding-bottom: 35px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -5%;
+    width: 110%;
+    height: 207px;
+    z-index: -1;
+    border-bottom-left-radius: 25%;
+    border-bottom-right-radius: 25%;
+    background: linear-gradient(139deg, #fbab7e -4.35%, #f7ce68 100.15%);
+  }
+}
+
+.wrap {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  flex: 1;
+  padding-left: 28px;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: normal;
+}
