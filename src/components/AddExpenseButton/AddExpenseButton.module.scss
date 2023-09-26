@@ -1,0 +1,14 @@
+.button {
+  position: absolute;
+  bottom: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  background-color: #f7ce68;
+  border: none;
+  border-radius: 50%;
+}

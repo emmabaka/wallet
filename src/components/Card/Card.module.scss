@@ -1,10 +1,19 @@
 .card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 374px;
   min-height: 201px;
-  margin: 0 auto;
   padding: 25px 20px 16px;
   border-radius: 20px;
   background: #fda085;
+  transition: all ease 300ms;
+}
+
+.hidden {
+  transition: all ease 300ms;
+  transform: translateX(-200%);
 }
 
 .title {

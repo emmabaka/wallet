@@ -3,7 +3,7 @@ import { ArrowSVG } from "../svgs/svgs";
 import s from "./AddExpenseForm.module.scss";
 import { useState } from "react";
 
-const AddExpenseForm = () => {
+const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const currDate = new Date()
     .toLocaleDateString()
     .split(".")
@@ -15,7 +15,7 @@ const AddExpenseForm = () => {
   const [amount, setAmount] = useState("");
 
   return (
-    <form className={s.form}>
+    <form className={addExpense ? `${s.active} ${s.form}` : s.form}>
       <div className={s.inputWrap}>
         <label className={s.label} htmlFor="category">
           Category
