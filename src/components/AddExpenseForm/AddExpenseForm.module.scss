@@ -180,4 +180,9 @@
   background-color: #fda085;
   border: none;
   border-radius: 8px;
+
+  &:disabled {
+    background-color: #666;
+    cursor: default;
+  }
 }

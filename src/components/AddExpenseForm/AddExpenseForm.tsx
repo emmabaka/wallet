@@ -1,5 +1,5 @@
 import { ArrowSVG } from "../svgs/svgs";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, memo, useEffect, useState } from "react";
 import s from "./AddExpenseForm.module.scss";
 
 const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food"];
@@ -135,11 +135,11 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           {new Date(date).toUTCString().slice(0, 16)}
         </div>
       </div>
-      <button className={s.submit} type="submit">
+      <button className={s.submit} disabled={amount === ""} type="submit">
         Add
       </button>
     </form>
   );
 };
 
-export default AddExpenseForm;
+export default memo(AddExpenseForm);
