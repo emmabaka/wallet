@@ -2,7 +2,7 @@ import { ArrowSVG } from "../svgs/svgs";
 import { SetStateAction, memo, useEffect, useState } from "react";
 import s from "./AddExpenseForm.module.scss";
 
-const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food"];
+const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food", "Beauty"];
 const incomeCategories = ["Salary", "Present"];
 
 const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {

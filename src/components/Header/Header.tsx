@@ -1,5 +1,8 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { useContext } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { getAuth, signOut } from "firebase/auth";
+import { UserContext } from "@/context/userContext";
 import { InfoSVG } from "../svgs/svgs";
 import s from "./Header.module.scss";
 
@@ -10,10 +13,29 @@ const Header = () => {
       ? "Homepage"
       : pathName.slice(1)[0].toUpperCase() + pathName.slice(2);
 
+  const userContext = useContext(UserContext);
+  console.log(userContext?.current.email);
+
+  const router = useRouter();
+
+  const handleLogOut = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        console.log(auth?.currentUser?.email);
+        userContext!.current = { email: null };
+        router.push("/login");
+      })
+      .catch(console.log);
+  };
+
   return (
     <header className={s.header}>
       <div className={`container ${s.wrap}`}>
         <h1 className={s.title}>{title}</h1>
+        <button type="button" onClick={handleLogOut}>
+          Log out from {userContext?.current.email}
+        </button>
         <InfoSVG />
       </div>
     </header>
