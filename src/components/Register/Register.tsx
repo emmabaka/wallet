@@ -1,7 +1,7 @@
 "use client";
+import { auth } from "@/firebase";
 import { UserContext } from "@/context/userContext";
 import {
-  getAuth,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithPopup,
@@ -14,12 +14,11 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const userContext = useContext(UserContext);
-  console.log(userContext?.current.email);
   const router = useRouter();
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const auth = getAuth();
+
     createUserWithEmailAndPassword(auth, email, pass)
       .then(({ user }) => {
         console.log(user);
@@ -31,7 +30,7 @@ const Register = () => {
 
   const handleGoogleAuth = () => {
     const googleProvider = new GoogleAuthProvider();
-    const auth = getAuth();
+
     signInWithPopup(auth, googleProvider)
       .then(({ user }) => {
         console.log(user);

@@ -1,9 +1,11 @@
 "use client";
+import { auth } from "@/firebase";
 import { UserContext } from "@/context/userContext";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { setCookie } from "cookies-next";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,15 +13,24 @@ const Login = () => {
   const router = useRouter();
   const userContext = useContext(UserContext);
   console.log(userContext?.current.email);
+  console.log(auth.currentUser?.email);
+
+  useEffect(() => {
+    console.log(auth.currentUser?.email);
+    if (auth.currentUser?.email) {
+      router.push("/");
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, pass)
       .then(({ user }) => {
         console.log(user);
         userContext!.current = { email: user.email };
-        // setUser({ email: user.email });
+        setCookie("userEmail", auth.currentUser?.email);
         router.push("/");
       })
       .catch(console.log);

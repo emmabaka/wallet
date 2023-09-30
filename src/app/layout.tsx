@@ -1,11 +1,8 @@
 "use client";
 import type { Metadata } from "next";
-import "./globals.scss";
-import FirebaseApp from "@/components/FirebaseApp/FirebaseApp";
 import { UserContext } from "@/context/userContext";
 import { useRef } from "react";
-
-// const inter = Inter({ subsets: ["latin"] });
+import "./globals.scss";
 
 // export const metadata: Metadata = {
 //   title: "Wallet",
@@ -21,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <FirebaseApp>
-          <UserContext.Provider value={user}>{children}</UserContext.Provider>
-        </FirebaseApp>
+        <UserContext.Provider value={user}>{children}</UserContext.Provider>
       </body>
     </html>
   );
