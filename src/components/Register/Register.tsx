@@ -1,28 +1,24 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { auth } from "@/firebase";
-import { UserContext } from "@/context/userContext";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const userContext = useContext(UserContext);
   const router = useRouter();
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     createUserWithEmailAndPassword(auth, email, pass)
-      .then(({ user }) => {
-        console.log(user);
-        userContext!.current = { email: user.email };
+      .then(() => {
         router.push("/");
       })
       .catch(console.log);
@@ -32,13 +28,12 @@ const Register = () => {
     const googleProvider = new GoogleAuthProvider();
 
     signInWithPopup(auth, googleProvider)
-      .then(({ user }) => {
-        console.log(user);
-        userContext!.current = { email: user.email };
+      .then(() => {
         router.push("/");
       })
       .catch(console.log);
-  };
+  }
+
   return (
     <>
       <form onSubmit={handleLogin}>

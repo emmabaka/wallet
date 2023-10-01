@@ -16,9 +16,6 @@ interface Transaction {
 const TransactionHistory = () => {
   const [history, setHistory] = useState<Transaction[]>([]);
 
-  // const transactionsCollectionRef = collection(db, auth.currentUser!.uid);
-  console.log(auth.currentUser?.uid);
-
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -30,7 +27,6 @@ const TransactionHistory = () => {
               ...doc.data(),
               id: doc.id,
             })) as Transaction[];
-            console.log(filteredData);
             setHistory(filteredData);
           } catch (error) {
             console.log(error);
@@ -40,7 +36,6 @@ const TransactionHistory = () => {
         getHistory();
       }
     });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

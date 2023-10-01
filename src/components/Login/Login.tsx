@@ -1,22 +1,20 @@
 "use client";
-import { auth } from "@/firebase";
-import { UserContext } from "@/context/userContext";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { setCookie } from "cookies-next";
+import { auth } from "@/firebase";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const router = useRouter();
-  const userContext = useContext(UserContext);
-  console.log(userContext?.current.email);
-  console.log(auth.currentUser?.email);
 
   useEffect(() => {
-    console.log(auth.currentUser?.email);
     if (auth.currentUser?.email) {
       router.push("/");
     }
@@ -27,14 +25,22 @@ const Login = () => {
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, pass)
-      .then(({ user }) => {
-        console.log(user);
-        userContext!.current = { email: user.email };
-        setCookie("userEmail", auth.currentUser?.email);
+      .then(() => {
         router.push("/");
       })
       .catch(console.log);
   };
+
+  const handleGoogleAuth = () => {
+    const googleProvider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, googleProvider)
+      .then(() => {
+        router.push("/");
+      })
+      .catch(console.log);
+  };
+
   return (
     <>
       <form onSubmit={handleLogin}>
@@ -57,6 +63,9 @@ const Login = () => {
           />
         </label>
         <button type="submit">Log in</button>
+        <button type="button" onClick={handleGoogleAuth}>
+          Sign in with Google
+        </button>
       </form>
       <p>
         Or <Link href="/register">Register</Link>

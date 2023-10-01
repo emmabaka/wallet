@@ -1,45 +1,46 @@
 "use client";
-import { useContext } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { getAuth, signOut } from "firebase/auth";
-import { UserContext } from "@/context/userContext";
+import { auth } from "@/firebase";
 import { InfoSVG } from "../svgs/svgs";
 import s from "./Header.module.scss";
-import { auth } from "@/firebase";
+import { useState } from "react";
 
 const Header = () => {
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const pathName = usePathname();
   const title =
     pathName === "/"
       ? "Homepage"
       : pathName.slice(1)[0].toUpperCase() + pathName.slice(2);
 
-  const userContext = useContext(UserContext);
-
-  console.log(userContext?.current.email);
-  console.log(auth.currentUser?.email);
-
   const router = useRouter();
+
+  const isNotAuth = pathName === "/login" || pathName === "/register";
 
   const handleLogOut = () => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        console.log(auth?.currentUser?.email);
-        userContext!.current = { email: null };
         router.push("/login");
       })
       .catch(console.log);
   };
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setUserEmail(user.email);
+    }
+  });
 
   return (
     <header className={s.header}>
       <div className={`container ${s.wrap}`}>
         <h1 className={s.title}>{title}</h1>
         <button type="button" onClick={handleLogOut}>
-          Log out from {auth.currentUser?.email}
+          Log out from {userEmail}
         </button>
-        <InfoSVG />
+        {!isNotAuth && <InfoSVG />}
       </div>
     </header>
   );
