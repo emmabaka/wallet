@@ -1,21 +1,32 @@
 "use client";
-import TotalBalance from "@/components/TotalBalance/TotalBalance";
-import TransactionHistory from "@/components/TransactionHistory/TransactionHistory";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { auth } from "@/firebase";
 import Navigation from "@/components/Navigation/Navigation";
-import s from "./page.module.scss";
+import Wallet from "@/components/Wallet/Wallet";
+import Loader from "@/components/Loader/Loader";
 
-const Wallet = () => {
+const WalletPage = () => {
+  const [isLoading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user?.email) {
+        setLoading(false);
+      } else {
+        router.push("/login");
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth]);
+
   return (
     <>
-      <main>
-        <div className={`${s.walletPage} container`}>
-          <TotalBalance />
-          <TransactionHistory />
-        </div>
-      </main>
+      <main>{isLoading ? <Loader /> : <Wallet />}</main>
       <Navigation />
     </>
   );
 };
 
-export default Wallet;
+export default WalletPage;
