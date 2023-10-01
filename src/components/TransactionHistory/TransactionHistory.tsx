@@ -1,12 +1,41 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { db } from "@/firebase";
+import { getDocs, collection } from "firebase/firestore";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import s from "./TransactionHistory.module.scss";
 
+interface Transaction {
+  amount: string;
+  category: string;
+  date: string;
+  id: string;
+  status: string;
+}
+
 const TransactionHistory = () => {
-  const [history, setHistory] = useState(
-    JSON.parse(localStorage.getItem("history") || "[]")
-  );
+  const [history, setHistory] = useState<Transaction[]>([]);
+
+  const transactionsCollectionRef = collection(db, "transactions");
+
+  useEffect(() => {
+    const getHistory = async () => {
+      try {
+        const data = await getDocs(transactionsCollectionRef);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        })) as Transaction[];
+        console.log(filteredData);
+        setHistory(filteredData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={s.historyContainer}>
