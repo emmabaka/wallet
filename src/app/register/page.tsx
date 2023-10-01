@@ -1,10 +1,9 @@
-"use client";
-import Register from "@/components/Register/Register";
+import AuthForm from "@/components/AuthForm/AuthForm";
 
 const RegisterPage = () => {
   return (
     <main>
-      <Register />
+      <AuthForm type="signUp" />
     </main>
   );
 };

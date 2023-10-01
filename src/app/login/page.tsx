@@ -1,10 +1,9 @@
-"use client";
-import Login from "@/components/Login/Login";
+import AuthForm from "@/components/AuthForm/AuthForm";
 
 const LoginPage = () => {
   return (
     <main>
-      <Login />
+      <AuthForm type="login" />
     </main>
   );
 };

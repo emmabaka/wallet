@@ -1,0 +1,108 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 358px;
+  min-height: 337px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 22px 35px 0px rgba(0, 0, 0, 0.08);
+  transition: all ease 300ms;
+}
+
+.label {
+  display: block;
+  padding-bottom: 5px;
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  padding: 16px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.14px;
+
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+
+  &:focus {
+    border: 1.4px solid #fda085;
+    color: #fda085;
+  }
+}
+
+.submit {
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  padding: 15px 0;
+  background-color: #fda085;
+  border: none;
+  border-radius: 8px;
+  transition: background-color ease 250ms;
+
+  &:hover {
+    background-color: #f07f60;
+  }
+}
+
+.googleButton {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  color: #fda085;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  padding: 15px 0;
+  background-color: white;
+  border: 1px solid #fda085;
+  border-radius: 8px;
+  transition: background-color ease 250ms;
+
+  &:hover {
+    background-color: #fda085;
+    color: white;
+  }
+}
+
+.or {
+  position: relative;
+  font-size: 14px;
+  color: #666;
+
+  & span {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 2;
+    width: 110px;
+    background-color: white;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #666;
+    opacity: 0.2;
+  }
+}
