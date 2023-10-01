@@ -1,5 +1,7 @@
-import { ArrowSVG } from "../svgs/svgs";
 import { SetStateAction, memo, useEffect, useState } from "react";
+import { auth, db } from "@/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { ArrowSVG } from "../svgs/svgs";
 import s from "./AddExpenseForm.module.scss";
 
 const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food", "Beauty"];
@@ -17,17 +19,29 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const [category, setCategory] = useState<string>("expense");
   const [amount, setAmount] = useState<string>("");
 
+  const transactionsCollectionRef = collection(db, auth.currentUser!.uid);
+
   useEffect(() => {
     status === "expense"
       ? setCategory(expenseCategories[0])
       : setCategory(incomeCategories[0]);
   }, [status]);
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const transaction = { status, date, category, amount, id: new Date() };
-    const history = JSON.parse(localStorage.getItem("history") || "[]");
-    localStorage.setItem("history", JSON.stringify([transaction, ...history]));
+    const transaction = {
+      status,
+      date,
+      category,
+      amount,
+      userId: auth.currentUser?.uid,
+    };
+
+    try {
+      await addDoc(transactionsCollectionRef, transaction);
+    } catch (error) {
+      console.log(error);
+    }
 
     const newTotal =
       status === "expense"
@@ -142,4 +156,4 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   );
 };
 
-export default memo(AddExpenseForm);
+export default AddExpenseForm;

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { db } from "@/firebase";
+import { auth, db } from "@/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import s from "./TransactionHistory.module.scss";
@@ -16,24 +16,31 @@ interface Transaction {
 const TransactionHistory = () => {
   const [history, setHistory] = useState<Transaction[]>([]);
 
-  const transactionsCollectionRef = collection(db, "transactions");
+  // const transactionsCollectionRef = collection(db, auth.currentUser!.uid);
+  console.log(auth.currentUser?.uid);
 
   useEffect(() => {
-    const getHistory = async () => {
-      try {
-        const data = await getDocs(transactionsCollectionRef);
-        const filteredData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        })) as Transaction[];
-        console.log(filteredData);
-        setHistory(filteredData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const transactionsCollectionRef = collection(db, user.uid);
+        const getHistory = async () => {
+          try {
+            const data = await getDocs(transactionsCollectionRef);
+            const filteredData = data.docs.map((doc) => ({
+              ...doc.data(),
+              id: doc.id,
+            })) as Transaction[];
+            console.log(filteredData);
+            setHistory(filteredData);
+          } catch (error) {
+            console.log(error);
+          }
+        };
 
-    getHistory();
+        getHistory();
+      }
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
