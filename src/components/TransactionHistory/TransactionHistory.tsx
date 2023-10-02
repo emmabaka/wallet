@@ -20,13 +20,16 @@ const TransactionHistory = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         const transactionsCollectionRef = collection(db, user.uid);
+        
         const getHistory = async () => {
           try {
             const data = await getDocs(transactionsCollectionRef);
+
             const filteredData = data.docs.map((doc) => ({
               ...doc.data(),
               id: doc.id,
             })) as Transaction[];
+
             setHistory(filteredData);
           } catch (error) {
             console.log(error);

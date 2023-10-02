@@ -1,17 +1,32 @@
 .title {
-  padding-bottom: 16px;
-  color: #666;
-  text-align: center;
   font-size: 16px;
   font-weight: 400;
   line-height: normal;
 }
 
+.titleWallet {
+  padding-bottom: 16px;
+  color: #666;
+  text-align: center;
+}
+
+.titleCard {
+  padding-bottom: 8px;
+  color: white;
+}
+
 .balance {
   padding-bottom: 8px;
-  color: #222;
   font-size: 30px;
   font-weight: 700;
   line-height: normal;
   letter-spacing: -1.5px;
+}
+
+.balanceWallet {
+  color: #222;
+}
+
+.balanceCard {
+  color: white;
 }
