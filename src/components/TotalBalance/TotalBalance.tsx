@@ -2,13 +2,14 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import {
-    CollectionReference,
-    DocumentData,
-    collection,
-    getDocs,
+  CollectionReference,
+  DocumentData,
+  collection,
+  getDocs,
 } from "firebase/firestore";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
 import { totalTransactionsAmount } from "@/utils/totalBalance";
+import clsx from "clsx";
 import s from "./TotalBalance.module.scss";
 
 interface Props {
@@ -59,29 +60,26 @@ const TotalBalance = ({ addExpense }: Props) => {
   return (
     <>
       <p
-        className={
-          isHomePage
-            ? `${s.title} ${s.titleCard}`
-            : `${s.title} ${s.titleWallet}`
-        }
+        className={clsx(s.title, {
+          [s.titleCard]: isHomePage,
+          [s.titleWallet]: !isHomePage,
+        })}
       >
         Total Balance
       </p>
       <p
-        className={
-          isHomePage
-            ? `${s.balance} ${s.balanceCard}`
-            : `${s.balance} ${s.balanceWallet}`
-        }
+        className={clsx(s.balance, {
+          [s.balanceCard]: isHomePage,
+          [s.balanceWallet]: !isHomePage,
+        })}
       >
         ₴ {formatNumberWithCommas(balance)}
       </p>
       <p
-        className={
-          isHomePage
-            ? `${s.balance} ${s.balanceCard}`
-            : `${s.balance} ${s.balanceWallet}`
-        }
+        className={clsx(s.balance, {
+          [s.balanceCard]: isHomePage,
+          [s.balanceWallet]: !isHomePage,
+        })}
       >
         $ 2,548.00
       </p>

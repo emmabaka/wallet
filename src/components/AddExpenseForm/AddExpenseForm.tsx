@@ -1,9 +1,10 @@
 import { SetStateAction, memo, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import { addDoc, collection, limit, orderBy, query } from "firebase/firestore";
+import { getHistory } from "@/utils/get";
 import { ArrowSVG } from "../svgs/svgs";
 import s from "./AddExpenseForm.module.scss";
-import { getHistory } from "@/utils/get";
+import clsx from "clsx";
 
 const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food", "Beauty"];
 const incomeCategories = ["Salary", "Present"];
@@ -21,7 +22,6 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const [amount, setAmount] = useState<string>("");
 
   const transactionsCollectionRef = collection(db, auth.currentUser!.uid);
-  console.log(date);
 
   useEffect(() => {
     status === "expense"
@@ -90,7 +90,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
   return (
     <form
-      className={addExpense ? `${s.active} ${s.form}` : s.form}
+      className={clsx(s.form, { [s.active]: addExpense })}
       onSubmit={handleSubmit}
     >
       <div className={s.radioListWrap}>
@@ -128,7 +128,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           Category
         </label>
         <select
-          className={`${s.input} ${s.select}`}
+          className={clsx(s.input, s.select)}
           name="category"
           id="category"
           value={category}
@@ -151,7 +151,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           Amount
         </label>
         <input
-          className={`${s.input} ${s.amount}`}
+          className={clsx(s.input, s.amount)}
           type="number"
           id="amount"
           value={amount}
@@ -164,7 +164,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           Date
         </label>
         <input
-          className={`${s.input} ${s.date}`}
+          className={clsx(s.input, s.date)}
           type="date"
           name="date"
           id="date"

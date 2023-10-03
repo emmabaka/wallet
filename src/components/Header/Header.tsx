@@ -1,10 +1,10 @@
 "use client";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { getAuth, signOut } from "firebase/auth";
 import { auth } from "@/firebase";
 import { InfoSVG } from "../svgs/svgs";
 import s from "./Header.module.scss";
-import { useState } from "react";
 
 const Header = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -18,13 +18,11 @@ const Header = () => {
 
   const isNotAuth = pathName === "/login" || pathName === "/register";
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        router.push("/login");
-      })
-      .catch(console.log);
+    await signOut(auth);
+    router.push("/login");
+    setUserEmail("");
   };
 
   auth.onAuthStateChanged((user) => {

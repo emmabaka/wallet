@@ -1,5 +1,6 @@
 import { formatDate } from "@/utils/formatDate";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
+import clsx from "clsx";
 import s from "./TransactionItem.module.scss";
 
 const TransactionItem = ({
@@ -21,7 +22,10 @@ const TransactionItem = ({
         <p className={s.date}>{formatDate(date)}</p>
       </div>
       <p
-        className={`${s.amount} ${status === "expense" ? s.expense : s.income}`}
+        className={clsx(s.amount, {
+          [s.expense]: status === "expense",
+          [s.income]: status === "income",
+        })}
       >
         {status === "expense" ? "-" : "+"} ₴ {formatNumberWithCommas(amount)}
       </p>

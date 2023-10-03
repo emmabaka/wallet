@@ -12,7 +12,7 @@ import {
 import { GoogleSVG } from "../svgs/svgs";
 import s from "./AuthForm.module.scss";
 
-const Login = ({ type }:{type: string}) => {
+const Login = ({ type }: { type: string }) => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const router = useRouter();
@@ -61,7 +61,7 @@ const Login = ({ type }:{type: string}) => {
       .catch(console.log);
   };
 
-  const handleSubmit = (e: { preventDefault: (() => void) | (() => void); }) => {
+  const handleSubmit = (e: { preventDefault: (() => void) | (() => void) }) => {
     if (type === "login") {
       return handleLogin(e, email, pass);
     } else {
@@ -72,26 +72,32 @@ const Login = ({ type }:{type: string}) => {
   return (
     <>
       <form className={s.form} onSubmit={handleSubmit}>
-        <label className={s.label}>
-          Email
+        <div>
+          <label className={s.label} htmlFor="email">
+            Email
+          </label>
           <input
             className={s.input}
+            id="email"
             type="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-        </label>
-        <label className={s.label}>
-          Password
+        </div>
+        <div>
+          <label className={s.label} htmlFor="password">
+            Password
+          </label>
           <input
             className={s.input}
+            id="password"
             type="password"
             name="password"
             value={pass}
             onChange={(e) => setPass(e.target.value)}
           />
-        </label>
+        </div>
         <button className={s.submit} type="submit">
           {type === "login" ? "Log in" : "Register"}
         </button>
