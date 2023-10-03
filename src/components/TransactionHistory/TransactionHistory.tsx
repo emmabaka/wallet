@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
-import { getDocs, collection } from "firebase/firestore";
+import { collection, query, orderBy } from "firebase/firestore";
+import { getHistory } from "@/utils/get";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import s from "./TransactionHistory.module.scss";
 
@@ -9,8 +10,9 @@ interface Transaction {
   amount: string;
   category: string;
   date: string;
-  id: string;
+  createdAt: string;
   status: string;
+  total: string;
 }
 
 const TransactionHistory = () => {
@@ -20,23 +22,13 @@ const TransactionHistory = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         const transactionsCollectionRef = collection(db, user.uid);
-        
-        const getHistory = async () => {
-          try {
-            const data = await getDocs(transactionsCollectionRef);
 
-            const filteredData = data.docs.map((doc) => ({
-              ...doc.data(),
-              id: doc.id,
-            })) as Transaction[];
+        const sortedItemsQuery = query(
+          transactionsCollectionRef,
+          orderBy("date", "desc")
+        );
 
-            setHistory(filteredData);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-
-        getHistory();
+        getHistory(sortedItemsQuery, setHistory);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,21 +42,9 @@ const TransactionHistory = () => {
           <p>No transactions yet</p>
         ) : (
           history.map(
-            ({
-              category,
-              date,
-              status,
-              amount,
-              id,
-            }: {
-              category: string;
-              date: string;
-              status: string;
-              amount: string;
-              id: string;
-            }) => (
+            ({ category, date, status, amount, createdAt }: Transaction) => (
               <TransactionItem
-                key={id}
+                key={createdAt}
                 category={category}
                 date={date}
                 status={status}

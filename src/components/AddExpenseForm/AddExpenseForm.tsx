@@ -1,8 +1,9 @@
 import { SetStateAction, memo, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, limit, orderBy, query } from "firebase/firestore";
 import { ArrowSVG } from "../svgs/svgs";
 import s from "./AddExpenseForm.module.scss";
+import { getHistory } from "@/utils/get";
 
 const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food", "Beauty"];
 const incomeCategories = ["Salary", "Present"];
@@ -20,6 +21,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const [amount, setAmount] = useState<string>("");
 
   const transactionsCollectionRef = collection(db, auth.currentUser!.uid);
+  console.log(date);
 
   useEffect(() => {
     status === "expense"
@@ -29,12 +31,36 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+    const sortedItemsQuery = query(
+      transactionsCollectionRef,
+      orderBy("createdAt", "desc"),
+      limit(1)
+    );
+
+    const total = await getHistory(sortedItemsQuery);
+
+    console.log("total", total);
+    console.log(
+      status,
+      status === "expense"
+        ? String(Number(total) - Number(amount))
+        : String(Number(total) + Number(amount))
+    );
+
+    const dataN = new Date(date);
+    console.log(dataN.getTime());
+
     const transaction = {
       status,
       date,
       category,
       amount,
-      userId: auth.currentUser?.uid,
+      createdAt: Date.now(),
+      total:
+        status === "expense"
+          ? String(Number(total) - Number(amount))
+          : String(Number(total) + Number(amount)),
     };
 
     try {
