@@ -21,7 +21,8 @@ interface Transaction {
 }
 
 const TotalBalance = ({ addExpense }: Props) => {
-  const [balance, setBalance] = useState(String(0));
+  const [balance, setBalance] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const isHomePage = addExpense !== undefined;
   const dependency = isHomePage ? addExpense : null;
 
@@ -41,6 +42,7 @@ const TotalBalance = ({ addExpense }: Props) => {
         totalTransactionsAmount(filteredData, "expense");
 
       setBalance(String(total));
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +52,7 @@ const TotalBalance = ({ addExpense }: Props) => {
     auth.onAuthStateChanged((user) => {
       if (user && !addExpense) {
         const transactionsCollectionRef = collection(db, user.uid);
-
+        setIsLoading(true);
         getTotal(transactionsCollectionRef);
       }
     });
@@ -73,7 +75,12 @@ const TotalBalance = ({ addExpense }: Props) => {
           [s.balanceWallet]: !isHomePage,
         })}
       >
-        ₴ {formatNumberWithCommas(balance)}
+        ₴{" "}
+        {isLoading ? (
+          <span className={s.loader}></span>
+        ) : (
+          formatNumberWithCommas(balance)
+        )}
       </p>
       <p
         className={clsx(s.balance, {

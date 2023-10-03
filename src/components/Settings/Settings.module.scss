@@ -1,0 +1,19 @@
+.logOut {
+  display: block;
+  margin: 0 auto;
+  margin-top: 35vh;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  padding: 15px 10px;
+  background-color: #fda085;
+  border: none;
+  border-radius: 8px;
+  transition: background-color ease 250ms;
+
+  &:hover {
+    background-color: #f07f60;
+  }
+}
