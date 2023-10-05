@@ -11,14 +11,9 @@ interface Props {
   addExpense?: boolean;
   balance: number;
   setBalance: Dispatch<SetStateAction<number>>;
-
 }
 
-const TotalBalance = ({
-  addExpense,
-  balance,
-  setBalance,
-}: Props) => {
+const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const isHomePage = addExpense !== undefined;
   const dependency = isHomePage ? addExpense : null;
@@ -32,9 +27,12 @@ const TotalBalance = ({
         );
         setIsLoading(true);
         const total = await getTotal(transactionsCollectionTotalRef);
-        setBalance(total[0].total);
+        if (total.length > 0) {
+          setBalance(total[0].total);
+        } else {
+          setBalance(0);
+        }
         setIsLoading(false);
-
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

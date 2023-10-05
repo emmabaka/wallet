@@ -13,7 +13,7 @@ interface Transaction {
   id: string;
   status: string;
   total: string;
-  createdAt: string
+  createdAt: string;
 }
 
 const TransactionHistory = () => {
@@ -26,7 +26,7 @@ const TransactionHistory = () => {
 
         const sortedItemsQuery = query(
           transactionsCollectionRef,
-          orderBy("date", "desc")
+          orderBy("createdAt", "desc")
         );
 
         getHistory(sortedItemsQuery, setHistory);

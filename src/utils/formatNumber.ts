@@ -1,5 +1,5 @@
 export function formatNumberWithCommas(number: number | null) {
-  if (!number) {
+  if (!number && number !== 0) {
     return;
   }
 

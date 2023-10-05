@@ -8,7 +8,7 @@ interface Transaction {
   createdAt: string;
   status: string;
   total: string;
-  id: string
+  id: string;
 }
 
 export const getHistory = async (
@@ -19,12 +19,17 @@ export const getHistory = async (
     const data = await getDocs(sortedItemsQuery);
 
     const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
+      ...doc.data(),
+      id: doc.id,
     })) as Transaction[];
 
     if (setState) {
-      setState(filteredData);
+      const sort = filteredData.toSorted((a, b) => {
+        const curr = a.date.replaceAll("-", "") + a.createdAt;
+        const next = b.date.replaceAll("-", "") + b.createdAt;
+        return Number(next) - Number(curr);
+      });
+      setState(sort);
     } else {
       return filteredData[0]?.total ?? String(0);
     }

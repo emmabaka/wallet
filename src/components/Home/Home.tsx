@@ -12,6 +12,7 @@ const Home = () => {
     <>
       <div className={s.wrap}>
         <Card
+        
           addExpense={addExpense}
           balance={balance}
           setBalance={setBalance}
