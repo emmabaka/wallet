@@ -8,6 +8,7 @@ interface Transaction {
   createdAt: string;
   status: string;
   total: string;
+  id: string
 }
 
 export const getHistory = async (
@@ -18,9 +19,9 @@ export const getHistory = async (
     const data = await getDocs(sortedItemsQuery);
 
     const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
+        ...doc.data(),
+        id: doc.id,
     })) as Transaction[];
-    console.log(filteredData);
 
     if (setState) {
       setState(filteredData);

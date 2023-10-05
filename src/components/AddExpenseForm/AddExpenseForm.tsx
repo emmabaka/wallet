@@ -1,10 +1,21 @@
-import { SetStateAction, memo, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
-import { addDoc, collection, limit, orderBy, query } from "firebase/firestore";
-import { getHistory } from "@/utils/get";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { getTotal } from "@/utils/getTotal";
 import { ArrowSVG } from "../svgs/svgs";
-import s from "./AddExpenseForm.module.scss";
 import clsx from "clsx";
+import s from "./AddExpenseForm.module.scss";
+
+interface Total {
+  id: string;
+  total: number;
+}
 
 const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food", "Beauty"];
 const incomeCategories = ["Salary", "Present"];
@@ -21,7 +32,15 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const [category, setCategory] = useState<string>("expense");
   const [amount, setAmount] = useState<string>("");
 
-  const transactionsCollectionRef = collection(db, auth.currentUser!.uid);
+  const transactionsCollectionHistoryRef = collection(
+    db,
+    auth.currentUser!.uid
+  );
+
+  const transactionsCollectionTotalRef = collection(
+    db,
+    `total${auth.currentUser!.uid}`
+  );
 
   useEffect(() => {
     status === "expense"
@@ -29,57 +48,55 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       : setCategory(incomeCategories[0]);
   }, [status]);
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
-    const sortedItemsQuery = query(
-      transactionsCollectionRef,
-      orderBy("createdAt", "desc"),
-      limit(1)
-    );
-
-    const total = await getHistory(sortedItemsQuery);
-
-    console.log("total", total);
-    console.log(
-      status,
-      status === "expense"
-        ? String(Number(total) - Number(amount))
-        : String(Number(total) + Number(amount))
-    );
-
-    const dataN = new Date(date);
-    console.log(dataN.getTime());
-
-    const transaction = {
-      status,
-      date,
-      category,
-      amount,
-      createdAt: Date.now(),
-      total:
-        status === "expense"
-          ? String(Number(total) - Number(amount))
-          : String(Number(total) + Number(amount)),
-    };
-
+  const updateTotal = async () => {
     try {
-      await addDoc(transactionsCollectionRef, transaction);
+      const data = await getTotal(transactionsCollectionTotalRef);
+
+      if (data.length === 0) {
+        await addDoc(transactionsCollectionTotalRef, {
+          total: status === "expense" ? 0 - Number(amount) : 0 + Number(amount),
+        });
+      } else {
+        const totalDoc = doc(db, `total${auth.currentUser!.uid}`, data[0].id);
+
+        await updateDoc(totalDoc, {
+          total:
+            status === "expense"
+              ? data[0].total - Number(amount)
+              : data[0].total + Number(amount),
+        });
+      }
+      return await getTotal(transactionsCollectionTotalRef);
     } catch (error) {
       console.log(error);
     }
+  };
 
-    const newTotal =
-      status === "expense"
-        ? Number(localStorage.getItem("total")) - Number(amount)
-        : Number(localStorage.getItem("total")) + Number(amount);
-    localStorage.setItem("total", String(newTotal));
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
 
     setDate(currDate);
     setCategory(
       status === "expense" ? expenseCategories[0] : incomeCategories[0]
     );
     setAmount("");
+
+    try {
+      const total = (await updateTotal()) as Total[];
+
+      const transaction = {
+        status,
+        date,
+        category,
+        amount,
+        createdAt: Date.now(),
+        total: total[0].total,
+      };
+
+      await addDoc(transactionsCollectionHistoryRef, transaction);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleStatusChange = (e: {

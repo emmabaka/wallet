@@ -2,22 +2,15 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import {
-  CollectionReference,
-  DocumentData,
   collection,
-  getDocs,
 } from "firebase/firestore";
+import { getTotal } from "@/utils/getTotal";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
-import { totalTransactionsAmount } from "@/utils/totalBalance";
 import clsx from "clsx";
 import s from "./TotalBalance.module.scss";
 
 interface Props {
   addExpense?: boolean;
-}
-interface Transaction {
-  amount: string;
-  status: string;
 }
 
 const TotalBalance = ({ addExpense }: Props) => {
@@ -26,34 +19,17 @@ const TotalBalance = ({ addExpense }: Props) => {
   const isHomePage = addExpense !== undefined;
   const dependency = isHomePage ? addExpense : null;
 
-  const getTotal = async (
-    transactionsCollectionRef: CollectionReference<DocumentData, DocumentData>
-  ) => {
-    try {
-      const data = await getDocs(transactionsCollectionRef);
-
-      const filteredData = data.docs.map((doc) => ({
-        amount: doc.data().amount,
-        status: doc.data().status,
-      })) as Transaction[];
-
-      const total =
-        totalTransactionsAmount(filteredData, "income") -
-        totalTransactionsAmount(filteredData, "expense");
-
-      setBalance(String(total));
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
       if (user && !addExpense) {
-        const transactionsCollectionRef = collection(db, user.uid);
+        const transactionsCollectionTotalRef = collection(
+          db,
+          `total${user.uid}`
+        );
         setIsLoading(true);
-        getTotal(transactionsCollectionRef);
+        const total = await getTotal(transactionsCollectionTotalRef);
+        setBalance(String(total[0].total));
+        setIsLoading(false);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

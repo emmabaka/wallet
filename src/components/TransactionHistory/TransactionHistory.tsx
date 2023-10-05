@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import { collection, query, orderBy } from "firebase/firestore";
-import { getHistory } from "@/utils/get";
+import { getHistory } from "@/utils/getHistory";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import s from "./TransactionHistory.module.scss";
 
@@ -10,9 +10,10 @@ interface Transaction {
   amount: string;
   category: string;
   date: string;
-  createdAt: string;
+  id: string;
   status: string;
   total: string;
+  createdAt: string
 }
 
 const TransactionHistory = () => {
@@ -41,17 +42,15 @@ const TransactionHistory = () => {
         {history.length === 0 ? (
           <p>No transactions yet</p>
         ) : (
-          history.map(
-            ({ category, date, status, amount, createdAt }: Transaction) => (
-              <TransactionItem
-                key={createdAt}
-                category={category}
-                date={date}
-                status={status}
-                amount={amount}
-              />
-            )
-          )
+          history.map(({ category, date, status, amount, id }: Transaction) => (
+            <TransactionItem
+              key={id}
+              category={category}
+              date={date}
+              status={status}
+              amount={amount}
+            />
+          ))
         )}
       </ul>
     </div>
