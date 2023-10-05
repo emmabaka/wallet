@@ -1,9 +1,9 @@
-export function formatNumberWithCommas(number: string | null) {
+export function formatNumberWithCommas(number: number | null) {
   if (!number) {
     return;
   }
-  
-  const parts = number.split(",");
+
+  const parts = String(number).split(",");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return parts.join(",");
 }

@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
-import {
-  collection,
-} from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { getTotal } from "@/utils/getTotal";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
 import clsx from "clsx";
@@ -11,10 +9,16 @@ import s from "./TotalBalance.module.scss";
 
 interface Props {
   addExpense?: boolean;
+  balance: number;
+  setBalance: Dispatch<SetStateAction<number>>;
+
 }
 
-const TotalBalance = ({ addExpense }: Props) => {
-  const [balance, setBalance] = useState<string | null>(null);
+const TotalBalance = ({
+  addExpense,
+  balance,
+  setBalance,
+}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const isHomePage = addExpense !== undefined;
   const dependency = isHomePage ? addExpense : null;
@@ -28,8 +32,9 @@ const TotalBalance = ({ addExpense }: Props) => {
         );
         setIsLoading(true);
         const total = await getTotal(transactionsCollectionTotalRef);
-        setBalance(String(total[0].total));
+        setBalance(total[0].total);
         setIsLoading(false);
+
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

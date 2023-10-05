@@ -1,12 +1,6 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, memo, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getTotal } from "@/utils/getTotal";
 import { ArrowSVG } from "../svgs/svgs";
 import clsx from "clsx";
@@ -47,6 +41,17 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       ? setCategory(expenseCategories[0])
       : setCategory(incomeCategories[0]);
   }, [status]);
+
+  useEffect(() => {
+    if (!addExpense) {
+      setDate(currDate);
+      setCategory(
+        status === "expense" ? expenseCategories[0] : incomeCategories[0]
+      );
+      setAmount("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addExpense]);
 
   const updateTotal = async () => {
     try {
@@ -174,7 +179,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <span className={s.dollar}>$</span>
+        <span className={s.dollar}>₴</span>
       </div>
       <div className={s.inputWrap}>
         <label className={s.label} htmlFor="date">
@@ -199,4 +204,4 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   );
 };
 
-export default AddExpenseForm;
+export default memo(AddExpenseForm);

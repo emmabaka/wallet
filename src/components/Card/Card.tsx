@@ -1,15 +1,45 @@
+"use client";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import TotalBalance from "../TotalBalance/TotalBalance";
-import { MoreSVG } from "../svgs/svgs";
+import UpdateTotalCard from "../UpdateTotalCard/UpdateTotalCard";
+import { UpdateSVG, CancelSVG } from "../svgs/svgs";
 import clsx from "clsx";
 import s from "./Card.module.scss";
+interface Props {
+  addExpense: boolean;
+  balance: number;
+  setBalance: Dispatch<SetStateAction<number>>;
+}
 
-const Card = ({ addExpense }: { addExpense: boolean }) => {
+const Card = ({ addExpense, balance, setBalance }: Props) => {
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    if (addExpense) setUpdate(false);
+  }, [addExpense]);
+
   return (
-    <div className={clsx(s.card, { [s.hidden]: addExpense })}>
-      <TotalBalance addExpense={addExpense} />
-      <div className={s.more}>
-        <MoreSVG />
+    <div className={clsx({ [s.hidden]: addExpense, [s.wrap]: !addExpense })}>
+      <div className={s.card}>
+        <TotalBalance
+          addExpense={addExpense}
+          balance={balance}
+          setBalance={setBalance}
+        />
+        <div
+          className={s.more}
+          onClick={() => {
+            setUpdate(!update);
+          }}
+        >
+          {update ? <CancelSVG /> : <UpdateSVG />}
+        </div>
       </div>
+      <UpdateTotalCard
+        update={update}
+        setUpdate={setUpdate}
+        setBalance={setBalance}
+      />
     </div>
   );
 };
