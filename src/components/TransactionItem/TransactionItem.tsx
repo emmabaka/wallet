@@ -27,7 +27,8 @@ const TransactionItem = ({
           [s.income]: status === "income",
         })}
       >
-        {status === "expense" ? "-" : "+"} ₴ {formatNumberWithCommas(amount)}
+        {status === "expense" ? "-" : "+"} ₴{" "}
+        {formatNumberWithCommas(Number(amount))}
       </p>
     </li>
   );
