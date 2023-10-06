@@ -1,7 +1,7 @@
 .list {
   padding-top: 16px;
   margin-top: 16px;
-  max-height: calc(100vh - 80px - 480px);
+  max-height: calc(100svh - 80px - 456px);
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
