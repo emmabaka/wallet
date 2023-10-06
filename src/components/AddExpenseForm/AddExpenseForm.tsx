@@ -112,7 +112,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
   return (
     <form
-      className={clsx(s.form, { [s.active]: addExpense })}
+      className={clsx(s.form, 'box', { [s.active]: addExpense })}
       onSubmit={handleSubmit}
     >
       <div className={s.radioListWrap}>

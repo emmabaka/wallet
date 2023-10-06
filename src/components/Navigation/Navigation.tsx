@@ -14,7 +14,7 @@ const Navigation = () => {
               </Link>
             </li>
             <li>
-              <Link className={s.link} href="/statistics">
+              <Link className={s.link} href="/statistic">
                 <StatsSVG />
               </Link>
             </li>

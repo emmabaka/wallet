@@ -23,13 +23,7 @@ const TransactionHistory = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         const transactionsCollectionRef = collection(db, user.uid);
-
-        const sortedItemsQuery = query(
-          transactionsCollectionRef,
-          orderBy("createdAt", "desc")
-        );
-
-        getHistory(sortedItemsQuery, setHistory);
+        getHistory(transactionsCollectionRef, setHistory);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

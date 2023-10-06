@@ -31,7 +31,7 @@ export const getHistory = async (
       });
       setState(sort);
     } else {
-      return filteredData[0]?.total ?? String(0);
+      return filteredData;
     }
   } catch (error) {
     console.log(error);
