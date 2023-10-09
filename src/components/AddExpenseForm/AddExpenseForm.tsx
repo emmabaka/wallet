@@ -2,6 +2,7 @@ import { SetStateAction, memo, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getTotal } from "@/utils/getTotal";
+import { expenseCategories, incomeCategories } from "@/categories";
 import { ArrowSVG } from "../svgs/svgs";
 import clsx from "clsx";
 import s from "./AddExpenseForm.module.scss";
@@ -10,9 +11,6 @@ interface Total {
   id: string;
   total: number;
 }
-
-const expenseCategories = ["Coffe & Tea", "Car", "Home", "Food", "Beauty"];
-const incomeCategories = ["Salary", "Present"];
 
 const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const currDate = new Date()
@@ -112,7 +110,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
   return (
     <form
-      className={clsx(s.form, 'box', { [s.active]: addExpense })}
+      className={clsx(s.form, "box", { [s.active]: addExpense })}
       onSubmit={handleSubmit}
     >
       <div className={s.radioListWrap}>
@@ -191,6 +189,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           name="date"
           id="date"
           value={date}
+          max={`${currDate}`}
           onChange={(e) => setDate(e.target.value)}
         />
         <div className={s.selectedDate}>

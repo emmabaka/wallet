@@ -19,7 +19,7 @@ const Card = ({ addExpense, balance, setBalance }: Props) => {
   }, [addExpense]);
 
   return (
-    <div className={clsx({ [s.hidden]: addExpense, [s.wrap]: !addExpense })}>
+    <div className={clsx(s.wrap, { [s.hidden]: addExpense })}>
       <div className={s.card}>
         <TotalBalance
           addExpense={addExpense}

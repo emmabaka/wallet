@@ -2,6 +2,7 @@ import { formatDate } from "@/utils/formatDate";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
 import clsx from "clsx";
 import s from "./TransactionItem.module.scss";
+import Image from "next/image";
 
 const TransactionItem = ({
   category,
@@ -16,7 +17,14 @@ const TransactionItem = ({
 }) => {
   return (
     <li className={s.item}>
-      <div className={s.icon}></div>
+      <div className={s.icon}>
+        <Image
+          src={`/svgs/${category}.svg`}
+          alt={category}
+          width={30}
+          height={30}
+        ></Image>
+      </div>
       <div>
         <p className={s.category}>{category}</p>
         <p className={s.date}>{formatDate(date)}</p>

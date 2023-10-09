@@ -1,3 +1,4 @@
+import Image from "next/image";
 import s from "./StatisticItem.module.scss";
 
 const StatisticItem = ({
@@ -9,7 +10,14 @@ const StatisticItem = ({
 }) => {
   return (
     <li className={s.item}>
-      <div className={s.icon}></div>
+      <div className={s.icon}>
+        <Image
+          src={`/svgs/${category}.svg`}
+          alt={category}
+          width={30}
+          height={30}
+        ></Image>
+      </div>
       <p className={s.category}>{category}</p>
       <p className={s.amount}>₴ {amount}</p>
     </li>

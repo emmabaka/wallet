@@ -23,6 +23,11 @@ const Statistic = () => {
     { category: "Home", amount: 0 },
     { category: "Food", amount: 0 },
     { category: "Beauty", amount: 0 },
+    { category: "Entertainment", amount: 0 },
+    { category: "Travel", amount: 0 },
+    { category: "Education", amount: 0 },
+    { category: "Restaurant", amount: 0 },
+    { category: "Subscriptions", amount: 0 },
   ];
 
   useEffect(() => {

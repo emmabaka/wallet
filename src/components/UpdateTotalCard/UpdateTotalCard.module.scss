@@ -2,6 +2,7 @@
   position: absolute;
   top: 100%;
   left: 0;
+  max-width: 358px;
   width: 100%;
   transform: translateX(-101vw);
   display: flex;
@@ -53,13 +54,14 @@
 
 .dollar {
   position: absolute;
-  top: 14px;
+  top: 50%;
   left: 16px;
   font-size: 14px;
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.14px;
   color: #666;
+  transform: translateY(-50%);
 }
 
 .submit {

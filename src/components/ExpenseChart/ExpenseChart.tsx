@@ -1,22 +1,23 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-interface Transaction {
-  amount: string;
-  category: string;
-  date: string;
-  createdAt: string;
-  status: string;
-  total: string;
-  id: string;
-}
+ChartJS.register(ArcElement, Tooltip);
 interface Categories {
   category: string;
   amount: number;
 }
-const colors = ["#ffaaa6", "#c6c8ff", "#778e78", "#ffb082", "#694e52"];
+const colors = [
+  "#ffaaa6",
+  "#c6c8ff",
+  "#778e78",
+  "#ffb082",
+  "#694e52",
+  "#67a0f8",
+  "#6c5797",
+  "#bababa",
+  "#198754",
+  "#fcd975",
+];
 
 const ExpenseChart = ({ categories }: { categories: Categories[] }) => {
   const data = {
@@ -39,8 +40,3 @@ const ExpenseChart = ({ categories }: { categories: Categories[] }) => {
 };
 
 export default ExpenseChart;
-
-// #ffaaa6;
-// #c6c8ff;
-// #778e78
-// #ffb082

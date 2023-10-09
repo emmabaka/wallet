@@ -4,7 +4,12 @@
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
-  transition: all ease 300ms;
+  transition: transform ease 300ms;
+}
+
+.hidden {
+  transform: translateX(-160%);
+  transition: transform ease 300ms;
 }
 
 .card {
@@ -15,11 +20,6 @@
   border-radius: 20px;
   margin: 0 auto 32px;
   background: #fda085;
-}
-
-.hidden {
-  transition: all ease 300ms;
-  transform: translateX(-201vw);
 }
 
 .title {
