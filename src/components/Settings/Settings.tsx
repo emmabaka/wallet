@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase";
 import { getAuth, signOut } from "firebase/auth";
-import s from './Settings.module.scss'
+import s from "./Settings.module.scss";
 
 const Settings = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -15,6 +15,7 @@ const Settings = () => {
     await signOut(auth);
     router.push("/login");
   };
+  console.log(auth);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -25,9 +26,11 @@ const Settings = () => {
   }, []);
 
   return (
-    <button className={s.logOut} type="button" onClick={handleLogOut}>
-      Log out from {userEmail}
-    </button>
+    <div className="box">
+      <button className={s.logOut} type="button" onClick={handleLogOut}>
+        Log out
+      </button>
+    </div>
   );
 };
 

@@ -7,9 +7,10 @@ interface Categories {
 }
 
 const StatisticList = ({ categories }: { categories: Categories[] }) => {
+  const filteredCategories = categories.filter((item) => item.amount > 0);
   return (
     <ul className={s.list}>
-      {categories.map(({ category, amount }) => (
+      {filteredCategories.map(({ category, amount }) => (
         <StatisticItem key={category} category={category} amount={amount} />
       ))}
     </ul>

@@ -1,7 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip);
+ChartJS.register(ArcElement, Tooltip, Legend);
 interface Categories {
   category: string;
   amount: number;
@@ -20,21 +20,59 @@ const colors = [
 ];
 
 const ExpenseChart = ({ categories }: { categories: Categories[] }) => {
+  const filteredCategories = categories.filter((item) => item.amount > 0);
+
   const data = {
-    labels: categories.map((item) => item.category),
+    labels: filteredCategories.map((item) => item.category),
     datasets: [
       {
         label: "Amount",
-        data: categories.map((item) => item.amount),
+        data: filteredCategories.map((item) => item.amount),
         backgroundColor: colors,
         borderColor: colors,
       },
     ],
   };
 
+  const backgroundCircle = {
+    id: "backgroundCircle",
+    beforeDatasetsDraw(chart: { getDatasetMeta?: any; ctx?: any }) {
+      const { ctx } = chart;
+      ctx.save();
+      const xCoor = chart.getDatasetMeta(0).data[0]?.x;
+      const yCoor = chart.getDatasetMeta(0).data[0]?.y;
+      const innerRadius = chart.getDatasetMeta(0).data[0]?.innerRadius;
+      const outerRadius = chart.getDatasetMeta(0).data[0]?.outerRadius;
+      const width = outerRadius - innerRadius;
+      const angle = Math.PI / 180;
+      ctx.beginPath();
+      ctx.lineWidth = width;
+      ctx.strokeStyle = "grey";
+      ctx.arc(xCoor, yCoor, outerRadius - width / 2, 0, angle * 360, false);
+      ctx.stroke();
+    },
+  };
+
   return (
     <div className="box">
-      <Doughnut data={data} options={{}}></Doughnut>
+      <Doughnut
+        data={data}
+        options={{
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                boxWidth: 10,
+                boxHeight: 10,
+                font: {
+                  size: 10,
+                },
+              },
+            },
+          },
+        }}
+        plugins={[backgroundCircle]}
+      ></Doughnut>
     </div>
   );
 };
