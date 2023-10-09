@@ -1,19 +1,83 @@
+.profileWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 8px;
+  padding-bottom: 40px;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.emailWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
 .logOut {
-  display: block;
-  margin: 0 auto;
-  margin-top: 35vh;
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 130px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.56px;
+  padding: 5px 29px;
+  background-color: #f6f4f4;
+  border: none;
+  border-radius: 40px;
+  transition: background-color ease 250ms;
+
+  &:hover {
+    background-color: #ebe9e9;
+  }
+}
+
+.email {
+  color: #010101;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.64px;
+  padding-left: 5px;
+}
+
+.clearDataWrap {
+  padding-left: 8px;
+}
+
+.label {
+  color: #010101;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  padding-bottom: 14px;
+}
+
+.clearButton {
   text-align: center;
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
-  padding: 15px 10px;
-  background-color: #fda085;
+  border-radius: 40px;
+  background: #f6f4f4;
+  width: 100%;
+  padding: 15px 0;
   border: none;
-  border-radius: 8px;
-  transition: background-color ease 250ms;
 
   &:hover {
-    background-color: #f07f60;
+    background-color: #ebe9e9;
+  }
+
+  &.clear {
+    color: #d85757;
+  }
+
+  &.confirm {
+    color: #51c271;
   }
 }
