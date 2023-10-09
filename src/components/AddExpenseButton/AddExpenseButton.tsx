@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { AddSVG, DoneSVG } from "../svgs/svgs";
 import s from "./AddExpenseButton.module.scss";
 
@@ -13,7 +14,10 @@ const AddExpenseButton = ({
   };
 
   return (
-    <button className={s.button} onClick={handleClick}>
+    <button
+      className={clsx(s.button, { [s.addExpense]: addExpense })}
+      onClick={handleClick}
+    >
       {addExpense ? <DoneSVG /> : <AddSVG />}
     </button>
   );

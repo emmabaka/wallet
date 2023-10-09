@@ -2,6 +2,8 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  cursor: default;
+  // border: 1px solid red;
 }
 
 body {
@@ -9,6 +11,12 @@ body {
   color: white;
   background-color: white;
   overflow-x: hidden;
+  -webkit-text-size-adjust: none;
+  touch-action: pan-x pan-y;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 h1,
@@ -31,8 +39,12 @@ ul {
 }
 
 button {
+  cursor: default;
   font: inherit;
-  cursor: pointer;
+}
+
+a {
+  cursor: default;
 }
 
 .container {
@@ -41,11 +53,12 @@ button {
 }
 
 .box {
-  width: 358px;
+  max-width: 358px;
+  width: 100%;
   min-height: 337px;
   margin: 0 auto;
   padding: 32px 20px;
   background-color: white;
   border-radius: 20px;
-  box-shadow: 0px 22px 35px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 3px 20px 0px rgba(0, 0, 0, 0.08);
 }

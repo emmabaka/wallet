@@ -1,3 +1,11 @@
 .wrap {
   position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  max-height: 300px;
+
+  &.addExpense {
+    min-height: 476px;
+    max-height: 476px;
+  }
 }

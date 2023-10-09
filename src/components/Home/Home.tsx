@@ -3,6 +3,7 @@ import AddExpenseButton from "../AddExpenseButton/AddExpenseButton";
 import AddExpenseForm from "../AddExpenseForm/AddExpenseForm";
 import Card from "../Card/Card";
 import s from "./Home.module.scss";
+import clsx from "clsx";
 
 const Home = () => {
   const [addExpense, setAddExpense] = useState<boolean>(false);
@@ -10,9 +11,10 @@ const Home = () => {
 
   return (
     <>
-      <div className={s.wrap}>
+      <div
+        className={clsx("container", s.wrap, { [s.addExpense]: addExpense })}
+      >
         <Card
-        
           addExpense={addExpense}
           balance={balance}
           setBalance={setBalance}

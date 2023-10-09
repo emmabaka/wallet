@@ -1,10 +1,5 @@
 .list {
   padding-top: 16px;
+  padding-bottom: 76px;
   margin-top: 16px;
-  max-height: calc(100svh - 80px - 456px);
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }

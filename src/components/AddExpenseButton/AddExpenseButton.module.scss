@@ -1,6 +1,6 @@
 .button {
   position: absolute;
-  bottom: 95px;
+  bottom: 75px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -11,4 +11,10 @@
   background-color: #f7ce68;
   border: none;
   border-radius: 50%;
+  transition: width 0.3s ease, height 0.3s ease;
+
+  &.addExpense {
+    width: 55px;
+    height: 55px;
+  }
 }
