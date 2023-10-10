@@ -1,6 +1,13 @@
-import Link from "next/link";
+import NavigationItem from "../NavigationItem/NavigationItem";
 import { HomeSVG, StatsSVG, WalletSVG, SettingsSVG } from "../svgs/svgs.js";
 import s from "./Navigation.module.scss";
+
+const navList = [
+  { href: "/", icon: HomeSVG },
+  { href: "/statistic", icon: StatsSVG },
+  { href: "/wallet", icon: WalletSVG },
+  { href: "/settings", icon: SettingsSVG },
+];
 
 const Navigation = () => {
   return (
@@ -8,26 +15,9 @@ const Navigation = () => {
       <div className="container">
         <nav className={s.nav}>
           <ul className={s.navList}>
-            <li>
-              <Link className={s.link} href="/">
-                <HomeSVG />
-              </Link>
-            </li>
-            <li>
-              <Link className={s.link} href="/statistic">
-                <StatsSVG />
-              </Link>
-            </li>
-            <li>
-              <Link className={s.link} href="/wallet">
-                <WalletSVG />
-              </Link>
-            </li>
-            <li>
-              <Link className={s.link} href="/settings">
-                <SettingsSVG />
-              </Link>
-            </li>
+            {navList.map(({ href, icon }, i) => (
+              <NavigationItem key={i} href={href} Icon={icon} />
+            ))}
           </ul>
         </nav>
       </div>

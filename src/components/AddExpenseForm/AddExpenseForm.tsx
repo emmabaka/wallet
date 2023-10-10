@@ -19,6 +19,8 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
     .toReversed()
     .join("-");
 
+  console.log(currDate);
+
   const [status, setStatus] = useState<string>("expense");
   const [date, setDate] = useState<string>(currDate);
   const [category, setCategory] = useState<string>("expense");
