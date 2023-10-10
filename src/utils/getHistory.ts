@@ -13,7 +13,7 @@ interface Transaction {
 
 export const getHistory = async (
   sortedItemsQuery: Query<DocumentData, DocumentData>,
-  setState?: Dispatch<SetStateAction<Transaction[]>>
+  setState?: Dispatch<SetStateAction<{ [key: string]: Transaction[] }>>
 ) => {
   try {
     const data = await getDocs(sortedItemsQuery);
@@ -24,12 +24,31 @@ export const getHistory = async (
     })) as Transaction[];
 
     if (setState) {
-      const sort = filteredData.toSorted((a, b) => {
-        const curr = a.date.replaceAll("-", "") + a.createdAt;
-        const next = b.date.replaceAll("-", "") + b.createdAt;
-        return Number(next) - Number(curr);
-      });
-      setState(sort);
+      const dateArray = Object.entries(
+        filteredData.reduce(
+          (result, transaction) => ({
+            ...result,
+            [transaction.date]: [
+              ...filteredData
+                .filter((el) => el.date === transaction.date)
+                .sort(
+                  (a, b) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+                ),
+            ],
+          }),
+          {}
+        )
+      );
+
+      dateArray.sort((a, b) => Number(b[0]) - Number(a[0]));
+
+      const sortedDateObjectDesc = Object.fromEntries(dateArray) as {
+        [key: string]: Transaction[];
+      };
+
+      setState(sortedDateObjectDesc);
     } else {
       return filteredData;
     }

@@ -17,7 +17,7 @@ interface Transaction {
 }
 
 const TransactionHistory = () => {
-  const [history, setHistory] = useState<Transaction[]>([]);
+  const [history, setHistory] = useState<{[key: string]: Transaction[]}>({});
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -33,17 +33,24 @@ const TransactionHistory = () => {
     <div className={s.historyContainer}>
       <h2 className={s.title}>History</h2>
       <ul className={s.list}>
-        {history.length === 0 ? (
+        {Object.keys(history).length === 0 ? (
           <p>No transactions yet</p>
         ) : (
-          history.map(({ category, date, status, amount, id }: Transaction) => (
-            <TransactionItem
-              key={id}
-              category={category}
-              date={date}
-              status={status}
-              amount={amount}
-            />
+          Object.values(history).map((day: Transaction[], idx) => (
+            <>
+              {idx > 0 && <div className={s.line} />}
+              {day.map(
+                ({ category, date, status, amount, id }: Transaction) => (
+                  <TransactionItem
+                    key={id}
+                    category={category}
+                    date={date}
+                    status={status}
+                    amount={amount}
+                  />
+                )
+              )}
+            </>
           ))
         )}
       </ul>

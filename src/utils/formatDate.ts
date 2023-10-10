@@ -1,11 +1,13 @@
 export function formatDate(date: string) {
-  const currDate = new Date()
-    .toLocaleDateString()
-    .split(".")
-    .toReversed()
-    .join("-");
+  const currDate = new Date();
+  const servDate = new Date(date);
 
-  if (date === currDate) return "Today";
+  if (
+    servDate.getDate() === currDate.getDate() &&
+    servDate.getMonth() === currDate.getMonth() &&
+    servDate.getFullYear() === currDate.getFullYear()
+  )
+    return "Today";
 
   const months = [
     "Jan",
@@ -22,11 +24,9 @@ export function formatDate(date: string) {
     "Dec",
   ];
 
-  const dateParts = date.split("-");
-
-  const year = dateParts[0];
-  const month = months[parseInt(dateParts[1], 10) - 1];
-  const day = dateParts[2];
+  const year = servDate.getFullYear();
+  const month = months[servDate.getMonth() + 1];
+  const day = servDate.getDate();
 
   return `${month} ${day}, ${year}`;
 }
