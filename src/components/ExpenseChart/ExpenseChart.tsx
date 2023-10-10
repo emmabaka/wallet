@@ -6,6 +6,7 @@ interface Categories {
   category: string;
   amount: number;
 }
+
 const colors = [
   "#ffaaa6",
   "#c6c8ff",
@@ -20,7 +21,10 @@ const colors = [
 ];
 
 const ExpenseChart = ({ categories }: { categories: Categories[] }) => {
-  const filteredCategories = categories.filter((item) => item.amount > 0);
+  const filteredCategories =
+    categories.filter((item) => item.amount > 0).length === 0
+      ? [{ category: "No transactions yet", amount: 0 }]
+      : categories.filter((item) => item.amount > 0);
 
   const data = {
     labels: filteredCategories.map((item) => item.category),
