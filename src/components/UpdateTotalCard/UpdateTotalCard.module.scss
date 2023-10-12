@@ -36,17 +36,12 @@
   &:focus {
     border: 1.4px solid #fda085;
     color: #fda085;
-    font-size: 14px;
-    font-weight: 600;
 
     + .dollar {
-      font-weight: 600;
       color: #fda085;
     }
 
     &::placeholder {
-      font-size: 14px;
-      font-weight: 500;
       color: #fda085;
     }
   }
@@ -55,12 +50,12 @@
 .dollar {
   position: absolute;
   top: 50%;
-  left: 16px;
-  font-size: 14px;
+  left: 14px;
+  font-size: 16px;
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.14px;
-  color: #666;
+  color: rgb(117, 117, 117);
   transform: translateY(-50%);
 }
 

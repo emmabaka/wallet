@@ -12,7 +12,8 @@ interface Total {
   id: string;
   total: number;
 }
-const currDate = new Date().toDateString().split(".").toReversed().join("-");
+const currDate = new Date().toDateString();
+const maxDate = new Date().toISOString().split("T")[0];
 
 const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const [status, setStatus] = useState<string>("expense");
@@ -74,12 +75,12 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    const passDate = new Date(date).getTime();
+
+    if (passDate > new Date().getTime()) return;
 
     try {
       const total = (await updateTotal()) as Total[];
-
-      const passDate = new Date(date).getTime();
-      console.log(passDate);
 
       const transaction = {
         status,
@@ -191,7 +192,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           name="date"
           id="date"
           value={date}
-          max={`${currDate}`}
+          max={maxDate}
           onChange={(e) => setDate(e.target.value)}
         />
         <div className={s.selectedDate}>

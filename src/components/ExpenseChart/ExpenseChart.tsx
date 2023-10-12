@@ -30,7 +30,7 @@ const ExpenseChart = ({ categories }: { categories: Categories[] }) => {
     labels: filteredCategories.map((item) => item.category),
     datasets: [
       {
-        label: "Amount",
+        label: "",
         data: filteredCategories.map((item) => item.amount),
         backgroundColor: colors,
         borderColor: colors,
