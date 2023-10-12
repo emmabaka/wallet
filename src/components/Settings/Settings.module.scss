@@ -59,6 +59,10 @@
 }
 
 .clearButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   text-align: center;
   font-size: 16px;
   font-weight: 600;
@@ -79,5 +83,25 @@
 
   &.confirm {
     color: #51c271;
+  }
+}
+
+.loader {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #51c271;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

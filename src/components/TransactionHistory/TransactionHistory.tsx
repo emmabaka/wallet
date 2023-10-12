@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import { collection, query, orderBy } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
@@ -17,7 +17,7 @@ interface Transaction {
 }
 
 const TransactionHistory = () => {
-  const [history, setHistory] = useState<{[key: string]: Transaction[]}>({});
+  const [history, setHistory] = useState<{ [key: string]: Transaction[] }>({});
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -37,7 +37,7 @@ const TransactionHistory = () => {
           <p>No transactions yet</p>
         ) : (
           Object.values(history).map((day: Transaction[], idx) => (
-            <>
+            <Fragment key={idx}>
               {idx > 0 && <div className={s.line} />}
               {day.map(
                 ({ category, date, status, amount, id }: Transaction) => (
@@ -50,7 +50,7 @@ const TransactionHistory = () => {
                   />
                 )
               )}
-            </>
+            </Fragment>
           ))
         )}
       </ul>

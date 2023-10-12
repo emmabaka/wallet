@@ -4,6 +4,7 @@ import { auth, db } from "@/firebase";
 import { collection } from "firebase/firestore";
 import { getTotal } from "@/utils/getTotal";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
+import LoaderHorizontal from "../Loaders/LoaderHorizontal";
 import clsx from "clsx";
 import s from "./TotalBalance.module.scss";
 
@@ -54,12 +55,7 @@ const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
           [s.balanceWallet]: !isHomePage,
         })}
       >
-        ₴{" "}
-        {isLoading ? (
-          <span className={s.loader}></span>
-        ) : (
-          formatNumberWithCommas(balance)
-        )}
+        ₴ {isLoading ? <LoaderHorizontal /> : formatNumberWithCommas(balance)}
       </p>
       <p
         className={clsx(s.balance, {

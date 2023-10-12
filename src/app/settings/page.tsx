@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { auth } from "@/firebase";
 import Navigation from "@/components/Navigation/Navigation";
 import Settings from "@/components/Settings/Settings";
-import Loader from "@/components/Loader/Loader";
+import LoaderCircle from "@/components/Loaders/LoaderCircle";
 
 const SettingsPage = () => {
   const [isLoading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ const SettingsPage = () => {
   }, [auth]);
   return (
     <>
-      <main>{isLoading ? <Loader /> : <Settings />}</main>
+      <main>{isLoading ? <LoaderCircle /> : <Settings />}</main>
       <Navigation />
     </>
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -19,6 +21,18 @@ export default function RootLayout({
       <body>
         <Header />
         {children}
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </body>
     </html>
   );

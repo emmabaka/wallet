@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { auth } from "@/firebase";
 import Navigation from "@/components/Navigation/Navigation";
 import Wallet from "@/components/Wallet/Wallet";
-import Loader from "@/components/Loader/Loader";
+import LoaderCircle from "@/components/Loaders/LoaderCircle";
 
 const WalletPage = () => {
   const [isLoading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const WalletPage = () => {
 
   return (
     <>
-      <main>{isLoading ? <Loader /> : <Wallet />}</main>
+      <main>{isLoading ? <LoaderCircle /> : <Wallet />}</main>
       <Navigation />
     </>
   );

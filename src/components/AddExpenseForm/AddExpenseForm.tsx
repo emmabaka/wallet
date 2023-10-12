@@ -2,6 +2,7 @@ import { SetStateAction, memo, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getTotal } from "@/utils/getTotal";
+import { notifyError, notifySuccess } from "@/utils/notify";
 import { expenseCategories, incomeCategories } from "@/categories";
 import { ArrowSVG } from "../svgs/svgs";
 import clsx from "clsx";
@@ -14,8 +15,6 @@ interface Total {
 const currDate = new Date().toDateString().split(".").toReversed().join("-");
 
 const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
-  console.log(currDate);
-
   const [status, setStatus] = useState<string>("expense");
   const [date, setDate] = useState<string>(currDate);
   const [category, setCategory] = useState<string>("expense");
@@ -68,6 +67,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       }
       return await getTotal(transactionsCollectionTotalRef);
     } catch (error) {
+      notifyError();
       console.log(error);
     }
   };
@@ -91,7 +91,9 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       };
 
       await addDoc(transactionsCollectionHistoryRef, transaction);
+      notifySuccess("Added a new transaction.");
     } catch (error) {
+      notifyError();
       console.log(error);
     }
 

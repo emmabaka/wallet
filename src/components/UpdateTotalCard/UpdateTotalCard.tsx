@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase";
 import { getTotal } from "@/utils/getTotal";
+import { notifyError, notifySuccess } from "@/utils/notify";
 import clsx from "clsx";
 import s from "./UpdateTotalCard.module.scss";
 
@@ -31,7 +32,9 @@ const UpdateTotalCard = ({ update, setBalance, setUpdate }: Props) => {
       setBalance(Number(newTotal));
       setUpdate(false);
       setNewTotal("");
+      notifySuccess("Updated total balance.");
     } catch (error) {
+      notifyError();
       console.log(error);
     }
   };

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase";
-import Loader from "@/components/Loader/Loader";
+import LoaderCircle from "@/components/Loaders/LoaderCircle";
 import Navigation from "@/components/Navigation/Navigation";
 import Statistic from "@/components/Statistic/Statistic";
 
@@ -24,7 +24,7 @@ const StatisticPage = () => {
 
   return (
     <>
-      <main>{isLoading ? <Loader /> : <Statistic />}</main>
+      <main>{isLoading ? <LoaderCircle /> : <Statistic />}</main>
       <Navigation />
     </>
   );

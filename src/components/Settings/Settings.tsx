@@ -7,6 +7,9 @@ import { getAuth, signOut } from "firebase/auth";
 import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
 import { getTotal } from "@/utils/getTotal";
+import LoaderHorizontal from "../Loaders/LoaderHorizontal";
+import { notifyError, notifySuccess } from "@/utils/notify";
+
 import clsx from "clsx";
 import s from "./Settings.module.scss";
 
@@ -23,13 +26,19 @@ interface Transaction {
 const Settings = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [clear, setClear] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleLogOut = async () => {
-    const auth = getAuth();
-    await signOut(auth);
-    router.push("/login");
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+      router.push("/login");
+    } catch (error) {
+      notifyError();
+      console.log(error);
+    }
   };
   // console.log(auth);
 
@@ -43,6 +52,7 @@ const Settings = () => {
 
   const deleteDocs = async () => {
     try {
+      setLoading(true);
       auth.onAuthStateChanged(async (user) => {
         if (user) {
           const transactionsCollectionRef = collection(db, user.uid);
@@ -68,8 +78,12 @@ const Settings = () => {
           });
         }
       });
+      notifySuccess("Removed all the data.");
     } catch (error) {
+      notifyError();
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -97,7 +111,7 @@ const Settings = () => {
       </div>
       <div className={s.clearDataWrap}>
         <p className={s.label}>Clear all data (confirm to clear)</p>
-        {!clear ? (
+        {!clear && !loading ? (
           <button
             className={clsx(s.clearButton, s.clear)}
             onClick={() => setClear(true)}
@@ -112,7 +126,7 @@ const Settings = () => {
               setClear(false);
             }}
           >
-            Confirm
+            Confirm {loading && <span className={s.loader}></span>}
           </button>
         )}
       </div>
