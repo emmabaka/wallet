@@ -1,0 +1,12 @@
+{
+  "name": "Wallet app",
+  "short_name": "Wallet",
+  "icons": [
+
+  ],
+  "theme_color": "#FBAB7E",
+  "background_color": "#FBAB7E",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
