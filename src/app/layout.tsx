@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   applicationName: "Wallet app",
   formatDetection: { telephone: false },
   themeColor: "#FBAB7E",
+  manifest: "manifest.json",
 };
 
 export default function RootLayout({
