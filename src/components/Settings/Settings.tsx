@@ -78,12 +78,16 @@ const Settings = () => {
           });
         }
       });
-      notifySuccess("Removed all the data.");
+
+      setTimeout(() => {
+        setLoading(false);
+        notifySuccess("Removed all the data.");
+      }, 1000);
     } catch (error) {
       notifyError();
-      console.log(error);
-    } finally {
       setLoading(false);
+
+      console.log(error);
     }
   };
 
@@ -121,6 +125,7 @@ const Settings = () => {
         ) : (
           <button
             className={clsx(s.clearButton, s.confirm)}
+            disabled={loading}
             onClick={() => {
               deleteDocs();
               setClear(false);

@@ -4,6 +4,7 @@ import { collection, query, where } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
 import ExpenseChart from "../ExpenseChart/ExpenseChart";
 import StatisticList from "../StatisticList/StatisticList";
+import { expenseCategories } from "@/categories";
 interface Transaction {
   amount: string;
   category: string;
@@ -17,18 +18,10 @@ interface Transaction {
 const Statistic = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  const categories = [
-    { category: "Coffe & Tea", amount: 0 },
-    { category: "Car", amount: 0 },
-    { category: "Home", amount: 0 },
-    { category: "Food", amount: 0 },
-    { category: "Beauty", amount: 0 },
-    { category: "Entertainment", amount: 0 },
-    { category: "Travel", amount: 0 },
-    { category: "Education", amount: 0 },
-    { category: "Restaurant", amount: 0 },
-    { category: "Subscriptions", amount: 0 },
-  ];
+  const categories = expenseCategories.map((el) => ({
+    category: el,
+    amount: 0,
+  }));
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {

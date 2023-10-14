@@ -18,6 +18,10 @@ const colors = [
   "#bababa",
   "#198754",
   "#fcd975",
+  "#98E4FF",
+  "#176B87",
+  "#C70039",
+  "#9400FF",
 ];
 
 const ExpenseChart = ({ categories }: { categories: Categories[] }) => {
