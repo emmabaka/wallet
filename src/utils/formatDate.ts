@@ -1,7 +1,6 @@
 export function formatDate(date: string) {
   const currDate = new Date();
   const servDate = new Date(date);
-  console.log(date);
 
   if (
     servDate.getDate() === currDate.getDate() &&

@@ -16,6 +16,9 @@
 .infoWrap {
   position: relative;
   margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   &::after {
     content: "";
@@ -33,6 +36,9 @@
   color: #666;
   font-size: 14px;
   padding-right: 10px;
+  font-weight: 600;
+  background-color: white;
+  z-index: 1;
 }
 
 .list {
@@ -51,4 +57,26 @@
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
+}
+
+.totalWrap {
+  background-color: white;
+  z-index: 1;
+  padding-left: 5px;
+  color: #666;
+}
+
+.totalExpense,
+.totalIncome {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.totalIncome {
+  color: #25a969;
+  padding-right: 5px;
+}
+.totalExpense {
+  color: #f95b51;
+  padding-left: 5px;
 }

@@ -1,11 +1,11 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
-import { collection, query, orderBy } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
+import { formatDate } from "@/utils/formatDate";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import s from "./TransactionHistory.module.scss";
-import { formatDate } from "@/utils/formatDate";
 
 interface Transaction {
   amount: string;
@@ -39,11 +39,35 @@ const TransactionHistory = () => {
         ) : (
           Object.values(history).map((day: Transaction[], idx) => (
             <Fragment key={idx}>
-              {idx > 0 && (
+              {
                 <div className={s.infoWrap}>
                   <span className={s.date}>{formatDate(day[0].date)}</span>
+                  <div className={s.totalWrap}>
+                    {day.some((item) => item.status === "income") && (
+                      <span className={s.totalIncome}>
+                        +
+                        {day.reduce((prev, curr) => {
+                          if (curr.status === "income") {
+                            prev += Number(curr.amount);
+                          }
+                          return prev;
+                        }, 0)}
+                      </span>
+                    )}
+
+                    {day.some((item) => item.status === "expense") && (
+                      <span className={s.totalExpense}>
+                        {day.reduce((prev, curr) => {
+                          if (curr.status === "expense") {
+                            prev -= Number(curr.amount);
+                          }
+                          return prev;
+                        }, 0)}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              )}
+              }
               {day.map(
                 ({ category, date, status, amount, id }: Transaction) => (
                   <TransactionItem
