@@ -13,11 +13,26 @@
   background: #f4f6f6;
 }
 
-.line {
-  height: 1px;
-  width: 100%;
-  margin: 5px 0;
-  background: #000;
+.infoWrap {
+  position: relative;
+  margin-bottom: 16px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 15%;
+    height: 1px;
+    width: 100%;
+    margin: 5px 0;
+    transform: translateY(-50%);
+    background: #666;
+  }
+}
+
+.date {
+  color: #666;
+  font-size: 14px;
+  padding-right: 10px;
 }
 
 .list {

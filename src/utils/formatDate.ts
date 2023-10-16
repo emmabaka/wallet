@@ -1,6 +1,7 @@
 export function formatDate(date: string) {
   const currDate = new Date();
   const servDate = new Date(date);
+  console.log(date);
 
   if (
     servDate.getDate() === currDate.getDate() &&
@@ -25,7 +26,7 @@ export function formatDate(date: string) {
   ];
 
   const year = servDate.getFullYear();
-  const month = months[servDate.getMonth() + 1];
+  const month = months[servDate.getMonth()];
   const day = servDate.getDate();
 
   return `${month} ${day}, ${year}`;

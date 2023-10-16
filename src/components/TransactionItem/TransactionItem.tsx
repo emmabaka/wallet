@@ -1,8 +1,8 @@
+import Image from "next/image";
 import { formatDate } from "@/utils/formatDate";
 import { formatNumberWithCommas } from "@/utils/formatNumber";
 import clsx from "clsx";
 import s from "./TransactionItem.module.scss";
-import Image from "next/image";
 
 const TransactionItem = ({
   category,

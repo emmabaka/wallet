@@ -5,6 +5,7 @@ import { collection, query, orderBy } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import s from "./TransactionHistory.module.scss";
+import { formatDate } from "@/utils/formatDate";
 
 interface Transaction {
   amount: string;
@@ -38,7 +39,11 @@ const TransactionHistory = () => {
         ) : (
           Object.values(history).map((day: Transaction[], idx) => (
             <Fragment key={idx}>
-              {idx > 0 && <div className={s.line} />}
+              {idx > 0 && (
+                <div className={s.infoWrap}>
+                  <span className={s.date}>{formatDate(day[0].date)}</span>
+                </div>
+              )}
               {day.map(
                 ({ category, date, status, amount, id }: Transaction) => (
                   <TransactionItem
