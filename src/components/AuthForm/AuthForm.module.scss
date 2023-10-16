@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 22px;
-  width: 358px;
+  max-width: 358px;
+  width: 95%;
   min-height: 337px;
   margin: 0 auto;
   padding: 32px 20px;
@@ -57,6 +58,10 @@
   &:hover {
     background-color: #f07f60;
   }
+
+  &:disabled {
+    background-color: #666;
+  }
 }
 
 .googleButton {
@@ -105,4 +110,49 @@
     background-color: #666;
     opacity: 0.2;
   }
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.errorInput {
+  border-color: #cb3d40;
+  color: #cb3d40;
+}
+.errorLabel {
+  color: #cb3d40;
+}
+
+.error {
+  position: absolute;
+  bottom: -15px;
+  left: 10px;
+  font-size: 11px;
+  line-height: 14px;
+  color: #cb3d40;
+}
+
+.showPass {
+  position: absolute;
+  right: 15px;
+  bottom: 14px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: transparent;
+}
+
+.hint {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.link {
+  font-size: 14px;
+  color: #fda085;
+  padding-left: 5px;
+  text-decoration: underline;
 }

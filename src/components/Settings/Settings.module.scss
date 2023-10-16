@@ -1,3 +1,6 @@
+.settingsWrap {
+  width: 95%;
+}
 .profileWrap {
   display: flex;
   align-items: center;
@@ -44,6 +47,7 @@
   line-height: normal;
   letter-spacing: -0.64px;
   padding-left: 5px;
+  // max-width: 150px;
 }
 
 .clearDataWrap {

@@ -7,9 +7,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
 import { getTotal } from "@/utils/getTotal";
-import LoaderHorizontal from "../Loaders/LoaderHorizontal";
 import { notifyError, notifySuccess } from "@/utils/notify";
-
 import clsx from "clsx";
 import s from "./Settings.module.scss";
 
@@ -92,7 +90,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="box">
+    <div className={clsx("box", s.settingsWrap)}>
       <div className={s.profileWrap}>
         <Image
           className={s.avatar}

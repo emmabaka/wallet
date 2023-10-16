@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { InfoSVG } from "../svgs/svgs";
 import s from "./Header.module.scss";
+import clsx from "clsx";
 
 const Header = () => {
   const pathName = usePathname();
@@ -15,7 +16,9 @@ const Header = () => {
   return (
     <header className={s.header}>
       <div className={`container ${s.wrap}`}>
-        <h1 className={s.title}>{title}</h1>
+        <h1 className={clsx(s.title, { [s.titlePadding]: !isNotAuth })}>
+          {title}
+        </h1>
         {!isNotAuth && <InfoSVG />}
       </div>
     </header>

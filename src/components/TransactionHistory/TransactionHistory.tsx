@@ -34,7 +34,7 @@ const TransactionHistory = () => {
       <h2 className={s.title}>History</h2>
       <ul className={s.list}>
         {Object.keys(history).length === 0 ? (
-          <p>No transactions yet</p>
+          <p className={s.emptyHistory}>No transactions yet</p>
         ) : (
           Object.values(history).map((day: Transaction[], idx) => (
             <Fragment key={idx}>
