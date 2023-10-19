@@ -52,6 +52,7 @@ const TransactionHistory = () => {
                           }
                           return prev;
                         }, 0)}
+                        ₴
                       </span>
                     )}
 
@@ -63,6 +64,7 @@ const TransactionHistory = () => {
                           }
                           return prev;
                         }, 0)}
+                        ₴
                       </span>
                     )}
                   </div>
