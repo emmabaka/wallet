@@ -7,6 +7,7 @@ import { formatNumberWithCommas } from "@/utils/formatNumber";
 import LoaderHorizontal from "../Loaders/LoaderHorizontal";
 import clsx from "clsx";
 import s from "./TotalBalance.module.scss";
+import { USD_TO_UAH } from "@/utils/constants";
 
 interface Props {
   addExpense?: boolean;
@@ -63,7 +64,12 @@ const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
           [s.balanceWallet]: !isHomePage,
         })}
       >
-        $ 2,548.00
+        ${" "}
+        {isLoading ? (
+          <LoaderHorizontal />
+        ) : (
+          formatNumberWithCommas(Number((balance / USD_TO_UAH).toFixed(2)))
+        )}
       </p>
     </>
   );

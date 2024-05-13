@@ -1,0 +1,32 @@
+.taxesPage {
+  width: 100%;
+  padding: 32px 16px 80px;
+  border-radius: 30px 30px 0 0;
+  background: #fff;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.quarterWrapper {
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.taxMonth {
+  color: #17161d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quarterSum {
+  color: #17161d;
+  margin-top: 16px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

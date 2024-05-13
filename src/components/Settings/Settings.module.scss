@@ -47,11 +47,6 @@
   line-height: normal;
   letter-spacing: -0.64px;
   padding-left: 5px;
-  // max-width: 150px;
-}
-
-.clearDataWrap {
-  padding-left: 8px;
 }
 
 .label {
@@ -88,6 +83,28 @@
 
   &.confirm {
     color: #51c271;
+  }
+}
+
+.goToTaxes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  border-radius: 40px;
+  background: #f6f4f4;
+  width: 100%;
+  padding: 15px 0;
+  border: none;
+  margin-top: 16px;
+
+  &:hover {
+    background-color: #ebe9e9;
   }
 }
 

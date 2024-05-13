@@ -89,6 +89,10 @@ const Settings = () => {
     }
   };
 
+  const handleGotToTaxes = () => {
+    router.push("/taxes");
+  };
+
   return (
     <div className={clsx("box", s.settingsWrap)}>
       <div className={s.profileWrap}>
@@ -133,6 +137,10 @@ const Settings = () => {
           </button>
         )}
       </div>
+
+      <button className={s.goToTaxes} onClick={handleGotToTaxes}>
+        Go to taxes
+      </button>
     </div>
   );
 };
