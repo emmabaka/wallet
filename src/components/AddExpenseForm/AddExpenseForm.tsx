@@ -117,33 +117,77 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       onSubmit={handleSubmit}
     >
       <div className={s.radioListWrap}>
-        <div className={s.radioWrap}>
-          <input
-            className={s.radio}
-            id="expense"
-            type="radio"
-            name="status"
-            value="expense"
-            checked={status === "expense"}
-            onChange={handleStatusChange}
-          />
-          <label className={s.radioLabel} htmlFor="expense">
-            Expense
-          </label>
-        </div>
-        <div className={s.radioWrap}>
-          <input
-            className={s.radio}
-            id="income"
-            type="radio"
-            name="status"
-            value="income"
-            checked={status === "income"}
-            onChange={handleStatusChange}
-          />
-          <label className={s.radioLabel} htmlFor="income">
-            Income
-          </label>
+        <div className={s.radioListContainer}>
+          <div className={s.radioWrap}>
+            <input
+              className={s.radio}
+              id="expense"
+              type="radio"
+              name="status"
+              value="expense"
+              checked={status === "expense"}
+              onChange={handleStatusChange}
+            />
+            <label className={s.radioLabel} htmlFor="expense">
+              Expense
+            </label>
+          </div>
+          <div className={s.radioWrap}>
+            <input
+              className={s.radio}
+              id="transport"
+              type="radio"
+              name="status"
+              value="transport"
+              checked={status === "transport"}
+              onChange={handleStatusChange}
+            />
+            <label className={s.radioLabel} htmlFor="transport">
+              Transport
+            </label>
+          </div>
+          <div className={s.radioWrap}>
+            <input
+              className={s.radio}
+              id="food"
+              type="radio"
+              name="status"
+              value="food"
+              checked={status === "food"}
+              onChange={handleStatusChange}
+            />
+            <label className={s.radioLabel} htmlFor="food">
+              Food
+            </label>
+          </div>
+          <div className={s.radioWrap}>
+            <input
+              className={s.radio}
+              id="health"
+              type="radio"
+              name="status"
+              value="health"
+              checked={status === "health"}
+              onChange={handleStatusChange}
+            />
+            <label className={s.radioLabel} htmlFor="health">
+              Health
+            </label>
+          </div>
+          <div className={s.radioWrap}>
+            <input
+              className={s.radio}
+              id="income"
+              type="radio"
+              name="status"
+              value="income"
+              checked={status === "income"}
+              onChange={handleStatusChange}
+            />
+            <label className={s.radioLabel} htmlFor="income">
+              Income
+            </label>
+          </div>
         </div>
       </div>
       <div className={s.inputWrap}>

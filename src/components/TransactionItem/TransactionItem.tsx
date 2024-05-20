@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { formatDate } from "@/utils/formatDate";
-import { formatNumberWithCommas } from "@/utils/formatNumber";
+import { formatNumberWithSpaces } from "@/utils/formatNumber";
 import clsx from "clsx";
 import s from "./TransactionItem.module.scss";
 
@@ -36,7 +36,7 @@ const TransactionItem = ({
         })}
       >
         {status === "expense" ? "-" : "+"} ₴{" "}
-        {formatNumberWithCommas(Number(amount))}
+        {formatNumberWithSpaces(Number(amount))}
       </p>
     </li>
   );

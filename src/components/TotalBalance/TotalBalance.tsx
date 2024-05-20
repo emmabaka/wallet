@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import { collection } from "firebase/firestore";
 import { getTotal } from "@/utils/getTotal";
-import { formatNumberWithCommas } from "@/utils/formatNumber";
+import { formatNumberWithSpaces } from "@/utils/formatNumber";
 import LoaderHorizontal from "../Loaders/LoaderHorizontal";
 import clsx from "clsx";
 import s from "./TotalBalance.module.scss";
@@ -56,7 +56,12 @@ const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
           [s.balanceWallet]: !isHomePage,
         })}
       >
-        ₴ {isLoading ? <LoaderHorizontal /> : formatNumberWithCommas(balance)}
+        ₴{" "}
+        {isLoading ? (
+          <LoaderHorizontal />
+        ) : (
+          formatNumberWithSpaces(Number(balance.toFixed(2)))
+        )}
       </p>
       <p
         className={clsx(s.balance, {
@@ -68,7 +73,7 @@ const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
         {isLoading ? (
           <LoaderHorizontal />
         ) : (
-          formatNumberWithCommas(Number((balance / USD_TO_UAH).toFixed(2)))
+          formatNumberWithSpaces(Number((balance / USD_TO_UAH).toFixed(2)))
         )}
       </p>
     </>

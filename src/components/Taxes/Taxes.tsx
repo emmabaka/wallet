@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { auth, db } from "@/firebase";
 import { collection } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
+import { formatNumberWithSpaces } from "@/utils/formatNumber";
 
 const Taxes = () => {
   const [taxData, setTaxData] = useState<{ [key: string]: number }>({
@@ -83,12 +84,15 @@ const Taxes = () => {
             {quarter.map((month) => (
               <div className={s.taxMonth} key={idx}>
                 <h2>{month}</h2>
-                <p>₴ {taxData[month]}</p>
+                <p>₴ {formatNumberWithSpaces(taxData[month])}</p>
               </div>
             ))}
             <p className={s.quarterSum}>
-              Total: ₴ {quarterSum}
-              <span>5% - ₴ {quarterSumMinusFivePercent}</span>
+              Total: ₴ {formatNumberWithSpaces(Number(quarterSum))}
+              <span>
+                5% - ₴{" "}
+                {formatNumberWithSpaces(Number(quarterSumMinusFivePercent))}
+              </span>
             </p>
           </div>
         );

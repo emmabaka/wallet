@@ -58,12 +58,15 @@ const TransactionHistory = () => {
 
                     {day.some((item) => item.status === "expense") && (
                       <span className={s.totalExpense}>
-                        {day.reduce((prev, curr) => {
-                          if (curr.status === "expense") {
-                            prev -= Number(curr.amount);
-                          }
-                          return prev;
-                        }, 0)}
+                        {day
+                          .reduce((prev, curr) => {
+                            if (curr.status === "expense") {
+                              prev -= Number(curr.amount);
+                            }
+                            return prev;
+                          }, 0)
+                          .toFixed(2)
+                          .replace(".00", "")}
                         ₴
                       </span>
                     )}

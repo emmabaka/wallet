@@ -23,9 +23,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
   padding: 4px 5px;
   border-radius: 40px;
   background: #f4f6f6;
+}
+
+.radioListContainer {
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  justify-content: space-between;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+    height: 0;
+    width: 0;
+  }
 }
 
 .label {
@@ -60,7 +75,7 @@
 
 .radioWrap {
   text-align: center;
-  width: 50%;
+  min-width: 120px;
 }
 
 .radioLabel {
