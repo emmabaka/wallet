@@ -1,5 +1,6 @@
 .form {
   position: absolute;
+  overflow: hidden;
   top: 0;
   left: 50%;
   transform: translateX(101vw);
@@ -23,17 +24,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
   overflow: hidden;
   padding: 4px 5px;
   border-radius: 40px;
   background: #f4f6f6;
-}
+  gap: 16px;
 
-.radioListContainer {
-  display: flex;
-  align-items: center;
   overflow-x: scroll;
-  justify-content: space-between;
   width: 100%;
 
   &::-webkit-scrollbar {
@@ -75,13 +73,14 @@
 
 .radioWrap {
   text-align: center;
-  min-width: 120px;
+  width: fit-content;
 }
 
 .radioLabel {
   color: #666;
   display: block;
-  padding: 10px 0;
+  padding: 10px;
+  white-space: nowrap;
 }
 
 .radio {

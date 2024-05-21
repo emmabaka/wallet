@@ -3,6 +3,7 @@ import { formatDate } from "@/utils/formatDate";
 import { formatNumberWithSpaces } from "@/utils/formatNumber";
 import clsx from "clsx";
 import s from "./TransactionItem.module.scss";
+import { expenseCategoriesWithIcons } from "@/categories";
 
 const TransactionItem = ({
   category,
@@ -19,7 +20,11 @@ const TransactionItem = ({
     <li className={s.item}>
       <div className={s.icon}>
         <Image
-          src={`/svgs/${category}.svg`}
+          src={
+            expenseCategoriesWithIcons.includes(category)
+              ? `/svgs/${category}.svg`
+              : "/svgs/Other expenses.svg"
+          }
           alt={category}
           width={30}
           height={30}

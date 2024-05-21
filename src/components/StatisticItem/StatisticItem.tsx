@@ -1,5 +1,6 @@
 import Image from "next/image";
 import s from "./StatisticItem.module.scss";
+import { expenseCategoriesWithIcons } from "@/categories";
 
 const StatisticItem = ({
   category,
@@ -12,7 +13,11 @@ const StatisticItem = ({
     <li className={s.item}>
       <div className={s.icon}>
         <Image
-          src={`/svgs/${category}.svg`}
+          src={
+            expenseCategoriesWithIcons.includes(category)
+              ? `/svgs/${category}.svg`
+              : "/svgs/Other expenses.svg"
+          }
           alt={category}
           width={30}
           height={30}

@@ -3,10 +3,28 @@ import { auth, db } from "@/firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getTotal } from "@/utils/getTotal";
 import { notifyError, notifySuccess } from "@/utils/notify";
-import { expenseCategories, incomeCategories } from "@/categories";
+import {
+  beautyCategories,
+  commonCategories,
+  educationCategories,
+  entertainmentCategories,
+  expenseCategories,
+  foodCategories,
+  forLovedOneCategories,
+  healthCategories,
+  homeCategories,
+  incomeCategories,
+  otherCategories,
+  restaurantCategories,
+  shoppingCategories,
+  subscriptionsCategories,
+  transportCategories,
+  travelCategories,
+} from "@/categories";
 import { ArrowSVG } from "../svgs/svgs";
 import clsx from "clsx";
 import s from "./AddExpenseForm.module.scss";
+import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 interface Total {
   id: string;
@@ -15,10 +33,55 @@ interface Total {
 const currDate = new Date().toDateString();
 const maxDate = new Date().toISOString().split("T")[0];
 
+const categories = {
+  common: commonCategories,
+  transport: transportCategories,
+  food: foodCategories,
+  shopping: shoppingCategories,
+  subscriptions: subscriptionsCategories,
+  health: healthCategories,
+  "for beloved": forLovedOneCategories,
+  entertainment: entertainmentCategories,
+  beauty: beautyCategories,
+  home: homeCategories,
+  restaurant: restaurantCategories,
+  travel: travelCategories,
+  education: educationCategories,
+  other: otherCategories,
+  income: incomeCategories,
+} as { [key: string]: string[] };
+
+const CategoryButton = ({
+  handleStatusChange,
+  status,
+  id,
+}: {
+  handleStatusChange: (e: {
+    target: { value: SetStateAction<string> };
+  }) => void;
+  status: string;
+  id: string;
+}) => (
+  <div className={s.radioWrap}>
+    <input
+      className={s.radio}
+      id={id}
+      type="radio"
+      name="status"
+      value={id}
+      checked={status === id}
+      onChange={handleStatusChange}
+    />
+    <label className={s.radioLabel} htmlFor={id}>
+      {capitalizeFirstLetter(id)}
+    </label>
+  </div>
+);
+
 const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
-  const [status, setStatus] = useState<string>("expense");
+  const [status, setStatus] = useState<string>("common");
   const [date, setDate] = useState<string>(currDate);
-  const [category, setCategory] = useState<string>("expense");
+  const [category, setCategory] = useState<string>("Coffe & Tea");
   const [amount, setAmount] = useState<string>("");
 
   const transactionsCollectionHistoryRef = collection(
@@ -32,17 +95,13 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   );
 
   useEffect(() => {
-    status === "expense"
-      ? setCategory(expenseCategories[0])
-      : setCategory(incomeCategories[0]);
+    setCategory(categories[status][0]);
   }, [status]);
 
   useEffect(() => {
     if (!addExpense) {
       setDate(currDate);
-      setCategory(
-        status === "expense" ? expenseCategories[0] : incomeCategories[0]
-      );
+      setCategory(categories[status][0]);
       setAmount("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,14 +113,14 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
       if (data.length === 0) {
         await addDoc(transactionsCollectionTotalRef, {
-          total: status === "expense" ? 0 - Number(amount) : 0 + Number(amount),
+          total: status !== "income" ? 0 - Number(amount) : Number(amount),
         });
       } else {
         const totalDoc = doc(db, `total${auth.currentUser!.uid}`, data[0].id);
 
         await updateDoc(totalDoc, {
           total:
-            status === "expense"
+            status !== "income"
               ? data[0].total - Number(amount)
               : data[0].total + Number(amount),
         });
@@ -117,78 +176,14 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       onSubmit={handleSubmit}
     >
       <div className={s.radioListWrap}>
-        <div className={s.radioListContainer}>
-          <div className={s.radioWrap}>
-            <input
-              className={s.radio}
-              id="expense"
-              type="radio"
-              name="status"
-              value="expense"
-              checked={status === "expense"}
-              onChange={handleStatusChange}
-            />
-            <label className={s.radioLabel} htmlFor="expense">
-              Expense
-            </label>
-          </div>
-          <div className={s.radioWrap}>
-            <input
-              className={s.radio}
-              id="transport"
-              type="radio"
-              name="status"
-              value="transport"
-              checked={status === "transport"}
-              onChange={handleStatusChange}
-            />
-            <label className={s.radioLabel} htmlFor="transport">
-              Transport
-            </label>
-          </div>
-          <div className={s.radioWrap}>
-            <input
-              className={s.radio}
-              id="food"
-              type="radio"
-              name="status"
-              value="food"
-              checked={status === "food"}
-              onChange={handleStatusChange}
-            />
-            <label className={s.radioLabel} htmlFor="food">
-              Food
-            </label>
-          </div>
-          <div className={s.radioWrap}>
-            <input
-              className={s.radio}
-              id="health"
-              type="radio"
-              name="status"
-              value="health"
-              checked={status === "health"}
-              onChange={handleStatusChange}
-            />
-            <label className={s.radioLabel} htmlFor="health">
-              Health
-            </label>
-          </div>
-          <div className={s.radioWrap}>
-            <input
-              className={s.radio}
-              id="income"
-              type="radio"
-              name="status"
-              value="income"
-              checked={status === "income"}
-              onChange={handleStatusChange}
-            />
-            <label className={s.radioLabel} htmlFor="income">
-              Income
-            </label>
-          </div>
-        </div>
+        {Object.keys(categories).map((item) => (
+          <CategoryButton
+            key={item}
+            handleStatusChange={handleStatusChange}
+            status={status}
+            id={item}
+          />
+        ))}
       </div>
       <div className={s.inputWrap}>
         <label className={s.label} htmlFor="category">
@@ -201,13 +196,11 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          {(status === "expense" ? expenseCategories : incomeCategories).map(
-            (item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            )
-          )}
+          {categories[status].map((item) => (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          ))}
         </select>
         <div className={s.arrow}>
           <ArrowSVG />
