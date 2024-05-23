@@ -113,17 +113,16 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
       if (data.length === 0) {
         await addDoc(transactionsCollectionTotalRef, {
-          total: !incomeCategories.includes(status)
-            ? 0 - Number(amount)
-            : Number(amount),
+          total: status !== "income" ? 0 - Number(amount) : Number(amount),
         });
       } else {
         const totalDoc = doc(db, `total${auth.currentUser!.uid}`, data[0].id);
 
         await updateDoc(totalDoc, {
-          total: !incomeCategories.includes(status)
-            ? data[0].total - Number(amount)
-            : data[0].total + Number(amount),
+          total:
+            status !== "income"
+              ? data[0].total - Number(amount)
+              : data[0].total + Number(amount),
         });
       }
       return await getTotal(transactionsCollectionTotalRef);
@@ -160,11 +159,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
     }
 
     setDate(currDate);
-    setCategory(
-      !incomeCategories.includes(status)
-        ? commonCategories[0]
-        : incomeCategories[0]
-    );
+    setCategory(categories[status][0]);
     setAmount("");
     setIsDisabled(false);
   };
