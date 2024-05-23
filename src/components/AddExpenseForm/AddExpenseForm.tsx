@@ -144,6 +144,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
       const transaction = {
         status: status === "income" ? status : "expense",
+        type: status,
         date: passDate,
         category,
         amount,

@@ -10,11 +10,13 @@ const TransactionItem = ({
   date,
   status,
   amount,
+  type,
 }: {
   category: string;
   date: string;
   status: string;
   amount: string;
+  type: string;
 }) => {
   return (
     <li className={s.item}>
@@ -32,7 +34,7 @@ const TransactionItem = ({
       </div>
       <div>
         <p className={s.category}>{category}</p>
-        <p className={s.date}>{formatDate(date)}</p>
+        <p className={s.date}>{type || "-"}</p>
       </div>
       <p
         className={clsx(s.amount, {

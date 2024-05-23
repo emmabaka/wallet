@@ -15,6 +15,7 @@ interface Transaction {
   status: string;
   total: string;
   createdAt: string;
+  type: string;
 }
 
 const TransactionHistory = () => {
@@ -74,11 +75,12 @@ const TransactionHistory = () => {
                 </div>
               }
               {day.map(
-                ({ category, date, status, amount, id }: Transaction) => (
+                ({ category, date, status, amount, id, type }: Transaction) => (
                   <TransactionItem
                     key={id}
                     category={category}
                     date={date}
+                    type={type}
                     status={status}
                     amount={amount}
                   />

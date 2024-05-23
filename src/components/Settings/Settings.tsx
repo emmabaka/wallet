@@ -19,6 +19,7 @@ interface Transaction {
   status: string;
   total: string;
   id: string;
+  type: string;
 }
 
 const Settings = () => {

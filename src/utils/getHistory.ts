@@ -10,6 +10,7 @@ interface Transaction {
   status: string;
   total: string;
   id: string;
+  type: string;
 }
 
 export const getHistory = async (
@@ -36,7 +37,8 @@ export const getHistory = async (
                 )
                 .sort(
                   (a, b) =>
-                    new Date(b.date).getTime() - new Date(a.date).getTime()
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
                 ),
             ],
           }),
