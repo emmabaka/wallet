@@ -31,11 +31,12 @@ export const getHistory = async (
             ...result,
             [formatDate(transaction.date)]: [
               ...filteredData
-                .filter((el) => el.date === transaction.date)
+                .filter(
+                  (el) => formatDate(el.date) === formatDate(transaction.date)
+                )
                 .sort(
                   (a, b) =>
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime()
+                    new Date(b.date).getTime() - new Date(a.date).getTime()
                 ),
             ],
           }),
@@ -43,9 +44,14 @@ export const getHistory = async (
         )
       );
 
-      console.log(dateArray);
+      dateArray.sort((a, b) => {
+        const compareFirst =
+          a[0] === "Today" ? new Date().getTime() : new Date(a[0]).getTime();
+        const compareSecond =
+          b[0] === "Today" ? new Date().getTime() : new Date(b[0]).getTime();
 
-      dateArray.sort((a, b) => Number(b[0]) - Number(a[0]));
+        return Number(compareSecond) - Number(compareFirst);
+      });
 
       const sortedDateObjectDesc = Object.fromEntries(dateArray) as {
         [key: string]: Transaction[];
