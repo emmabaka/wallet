@@ -1,5 +1,6 @@
 import { DocumentData, Query, getDocs } from "firebase/firestore";
 import { Dispatch, SetStateAction } from "react";
+import { formatDate } from "@/utils/formatDate";
 
 interface Transaction {
   amount: string;
@@ -28,7 +29,7 @@ export const getHistory = async (
         filteredData.reduce(
           (result, transaction) => ({
             ...result,
-            [transaction.date]: [
+            [formatDate(transaction.date)]: [
               ...filteredData
                 .filter((el) => el.date === transaction.date)
                 .sort(
@@ -41,6 +42,8 @@ export const getHistory = async (
           {}
         )
       );
+
+      console.log(dateArray);
 
       dateArray.sort((a, b) => Number(b[0]) - Number(a[0]));
 
