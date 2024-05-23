@@ -1,25 +1,3 @@
-export const expenseCategories = [
-  "Coffe & Tea",
-  "Taxi",
-  "Transport",
-  "Home supplies",
-  "Supermarket",
-  "Cinema",
-  "Car",
-  "Gift",
-  "Beauty",
-  "Entertainment",
-  "Travel",
-  "Education",
-  "Restaurant",
-  "Subscriptions",
-  "Apartment & Rent",
-  "Shopping",
-  "Health",
-  "Taxes",
-  "Other expenses",
-];
-
 export const expenseCategoriesWithIcons = [
   "Coffe & Tea",
   "Taxi",
@@ -120,3 +98,20 @@ export const beautyCategories = [
 export const entertainmentCategories = ["Cinema", "Concert", "Activities"];
 
 export const otherCategories = ["Hookah", "Gifts", "Taxes", "Pet"];
+
+export const combinedExpenseCategories = [
+  ...commonCategories,
+  ...transportCategories,
+  ...foodCategories,
+  ...shoppingCategories,
+  ...subscriptionsCategories,
+  ...healthCategories,
+  ...forLovedOneCategories,
+  ...homeCategories,
+  ...beautyCategories,
+  ...entertainmentCategories,
+  ...travelCategories,
+  ...educationCategories,
+  ...restaurantCategories,
+  ...otherCategories,
+];

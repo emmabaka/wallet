@@ -4,7 +4,7 @@ import { collection, query, where } from "firebase/firestore";
 import { getHistory } from "@/utils/getHistory";
 import ExpenseChart from "../ExpenseChart/ExpenseChart";
 import StatisticList from "../StatisticList/StatisticList";
-import { expenseCategories } from "@/categories";
+import { combinedExpenseCategories } from "@/categories";
 interface Transaction {
   amount: string;
   category: string;
@@ -18,7 +18,7 @@ interface Transaction {
 const Statistic = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  const categories = expenseCategories.map((el) => ({
+  const categories = combinedExpenseCategories.map((el) => ({
     category: el,
     amount: 0,
   }));

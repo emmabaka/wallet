@@ -3,7 +3,7 @@ import { formatDate } from "@/utils/formatDate";
 import { formatNumberWithSpaces } from "@/utils/formatNumber";
 import clsx from "clsx";
 import s from "./TransactionItem.module.scss";
-import { expenseCategoriesWithIcons } from "@/categories";
+import { expenseCategoriesWithIcons, incomeCategories } from "@/categories";
 
 const TransactionItem = ({
   category,

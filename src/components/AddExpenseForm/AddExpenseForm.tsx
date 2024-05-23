@@ -8,7 +8,6 @@ import {
   commonCategories,
   educationCategories,
   entertainmentCategories,
-  expenseCategories,
   foodCategories,
   forLovedOneCategories,
   healthCategories,
@@ -83,6 +82,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
   const [date, setDate] = useState<string>(currDate);
   const [category, setCategory] = useState<string>("Coffe & Tea");
   const [amount, setAmount] = useState<string>("");
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const transactionsCollectionHistoryRef = collection(
     db,
@@ -113,16 +113,17 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
       if (data.length === 0) {
         await addDoc(transactionsCollectionTotalRef, {
-          total: status !== "income" ? 0 - Number(amount) : Number(amount),
+          total: !incomeCategories.includes(status)
+            ? 0 - Number(amount)
+            : Number(amount),
         });
       } else {
         const totalDoc = doc(db, `total${auth.currentUser!.uid}`, data[0].id);
 
         await updateDoc(totalDoc, {
-          total:
-            status !== "income"
-              ? data[0].total - Number(amount)
-              : data[0].total + Number(amount),
+          total: !incomeCategories.includes(status)
+            ? data[0].total - Number(amount)
+            : data[0].total + Number(amount),
         });
       }
       return await getTotal(transactionsCollectionTotalRef);
@@ -134,6 +135,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    setIsDisabled(true);
     const passDate = new Date(date).getTime();
 
     if (passDate > new Date().getTime()) return;
@@ -142,7 +144,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
       const total = (await updateTotal()) as Total[];
 
       const transaction = {
-        status,
+        status: status === "income" ? status : "expense",
         date: passDate,
         category,
         amount,
@@ -159,9 +161,12 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
 
     setDate(currDate);
     setCategory(
-      status === "expense" ? expenseCategories[0] : incomeCategories[0]
+      !incomeCategories.includes(status)
+        ? commonCategories[0]
+        : incomeCategories[0]
     );
     setAmount("");
+    setIsDisabled(false);
   };
 
   const handleStatusChange = (e: {
@@ -236,7 +241,11 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           {new Date(date).toString().slice(0, 16)}
         </div>
       </div>
-      <button className={s.submit} disabled={amount === ""} type="submit">
+      <button
+        className={s.submit}
+        disabled={amount === "" || isDisabled}
+        type="submit"
+      >
         Add
       </button>
     </form>

@@ -34,7 +34,7 @@ const Taxes = () => {
           const months = Object.keys(taxData);
 
           const incomeData = data
-            .filter((item) => item.status === "income")
+            .filter((item) => item.category === "Salary")
             .map((item) => ({
               amount: item.amount,
               month: months[new Date(item.date).getMonth()],
