@@ -160,7 +160,6 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
     }
 
     setDate(currDate);
-    setCategory(categories[status][0]);
     setAmount("");
     setIsDisabled(false);
   };
@@ -215,6 +214,7 @@ const AddExpenseForm = ({ addExpense }: { addExpense: boolean }) => {
           className={clsx(s.input, s.amount)}
           type="number"
           id="amount"
+          enterKeyHint="send"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
