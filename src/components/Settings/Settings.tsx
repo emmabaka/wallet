@@ -39,7 +39,6 @@ const Settings = () => {
       console.log(error);
     }
   };
-  // console.log(auth);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {

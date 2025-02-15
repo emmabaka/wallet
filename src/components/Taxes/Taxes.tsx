@@ -31,23 +31,27 @@ const getTotalQuarters = (idx: number, allSums: string[], year: number) => {
   }
 };
 
+const initialMonths = {
+  January: 0,
+  February: 0,
+  March: 0,
+  April: 0,
+  May: 0,
+  June: 0,
+  July: 0,
+  August: 0,
+  September: 0,
+  October: 0,
+  November: 0,
+  December: 0,
+};
+
 const Taxes = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [years, setYears] = useState([new Date().getFullYear()]);
-  const [taxData, setTaxData] = useState<{ [key: string]: number }>({
-    January: 0,
-    February: 0,
-    March: 0,
-    April: 0,
-    May: 0,
-    June: 0,
-    July: 0,
-    August: 0,
-    September: 0,
-    October: 0,
-    November: 0,
-    December: 0,
-  });
+  const [taxData, setTaxData] = useState<{ [key: string]: number }>(
+    initialMonths
+  );
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -82,7 +86,9 @@ const Taxes = () => {
             }));
 
           setTaxData((prev) => {
-            const updatedData = { ...prev };
+            const updatedData = { ...initialMonths } as {
+              [key: string]: number;
+            };
 
             incomeData.forEach((item) => {
               updatedData[item.month] = Number(item.amount);

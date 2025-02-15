@@ -8,6 +8,7 @@ import LoaderHorizontal from "../Loaders/LoaderHorizontal";
 import clsx from "clsx";
 import s from "./TotalBalance.module.scss";
 import { USD_TO_UAH } from "@/utils/constants";
+import { getCurrency } from "@/api/getCurrency";
 
 interface Props {
   addExpense?: boolean;
@@ -17,6 +18,7 @@ interface Props {
 
 const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [usdRate, setUsdRate] = useState(0);
   const isHomePage = addExpense !== undefined;
   const dependency = isHomePage ? addExpense : null;
 
@@ -29,6 +31,7 @@ const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
         );
         setIsLoading(true);
         const total = await getTotal(transactionsCollectionTotalRef);
+
         if (total.length > 0) {
           setBalance(total[0].total);
         } else {
@@ -38,6 +41,10 @@ const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    getCurrency().then((data) => {
+      setUsdRate(data?.rateBuy || USD_TO_UAH);
+    });
   }, [dependency]);
 
   return (
@@ -73,7 +80,7 @@ const TotalBalance = ({ addExpense, balance, setBalance }: Props) => {
         {isLoading ? (
           <LoaderHorizontal />
         ) : (
-          formatNumberWithSpaces(Number((balance / USD_TO_UAH).toFixed(2)))
+          formatNumberWithSpaces(Number((balance / usdRate).toFixed(2)))
         )}
       </p>
     </>

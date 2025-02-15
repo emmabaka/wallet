@@ -75,13 +75,14 @@ const TransactionHistory = () => {
                 </div>
               }
               {day.map(
-                ({ category, date, status, amount, id, type }: Transaction) => (
+                ({ category, status, amount, id, type }: Transaction) => (
                   <TransactionItem
                     key={id}
+                    id={id}
                     category={category}
-                    date={date}
                     type={type}
                     status={status}
+                    setHistory={setHistory}
                     amount={amount}
                   />
                 )
