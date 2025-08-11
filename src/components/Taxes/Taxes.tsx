@@ -154,6 +154,18 @@ const Taxes = () => {
           .toFixed(2)
           .replace(".00", "");
 
+        const quarterSumMinusOnePercent = (Number(quarterSum) * 0.01)
+          .toFixed(2)
+          .replace(".00", "");
+
+        const totalTax = (
+          Number(quarterSum) * 0.05 +
+          Number(quarterSum) * 0.01 +
+          5280
+        )
+          .toFixed(2)
+          .replace(".00", "");
+
         return (
           <div className={s.quarterWrapper} key={quarter[0]}>
             {quarter.map((month) => (
@@ -162,12 +174,36 @@ const Taxes = () => {
                 <p>₴ {formatNumberWithSpaces(taxData[month])}</p>
               </div>
             ))}
+
             <p className={s.quarterSum}>
-              Total: ₴ {formatNumberWithSpaces(Number(quarterSum))}
+              <span>
+                1% - ₴{" "}
+                {formatNumberWithSpaces(Number(quarterSumMinusOnePercent))}
+              </span>
               <span>
                 5% - ₴{" "}
                 {formatNumberWithSpaces(Number(quarterSumMinusFivePercent))}
               </span>
+            </p>
+
+            <p className={s.quarterSum}>
+              <span>USC - ₴ 5 280</span>
+              <span>Tax - ₴ {formatNumberWithSpaces(Number(totalTax))}</span>
+            </p>
+
+            <p className={s.quarterSum}>
+              <span>
+                Total income: ₴ {formatNumberWithSpaces(Number(quarterSum))}
+              </span>
+              <span />
+            </p>
+
+            <p className={s.quarterSum}>
+              <span>
+                After tax: ₴{" "}
+                {formatNumberWithSpaces(Number(quarterSum) - Number(totalTax))}
+              </span>
+              <span />
             </p>
 
             {idx !== 0 && (

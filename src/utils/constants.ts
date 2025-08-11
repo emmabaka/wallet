@@ -1,1 +1,1 @@
-export const USD_TO_UAH = 41.3;
+export const USD_TO_UAH = 41.4;
