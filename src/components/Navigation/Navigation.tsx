@@ -1,10 +1,15 @@
 import NavigationItem from "../NavigationItem/NavigationItem";
-import { HomeSVG, StatsSVG, WalletSVG, SettingsSVG } from "../svgs/svgs.js";
+import {
+  HomeSVG,
+  WalletSVG,
+  SettingsSVG,
+  DollarSVG,
+} from "../svgs/svgs.js";
 import s from "./Navigation.module.scss";
 
 const navList = [
   { href: "/", icon: HomeSVG },
-  { href: "/statistic", icon: StatsSVG },
+  { href: "/taxes", icon: DollarSVG },
   { href: "/wallet", icon: WalletSVG },
   { href: "/settings", icon: SettingsSVG },
 ];

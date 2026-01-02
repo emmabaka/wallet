@@ -73,7 +73,7 @@ const Taxes = () => {
                   updatedYears.push(year);
                 }
               });
-              return updatedYears;
+              return updatedYears.sort((a, b) => (a > b ? -1 : 1));
             });
           }
 
@@ -114,6 +114,12 @@ const Taxes = () => {
   );
 
   const allSums = [] as string[];
+
+  const usc =
+    {
+      2025: "5 280",
+      2026: "5 707.02",
+    }[year] || "5 280";
 
   return (
     <div className={clsx(s.taxesPage, "container")}>
@@ -161,7 +167,7 @@ const Taxes = () => {
         const totalTax = (
           Number(quarterSum) * 0.05 +
           Number(quarterSum) * 0.01 +
-          5280
+          Number(usc.replace(" ", ""))
         )
           .toFixed(2)
           .replace(".00", "");
@@ -187,7 +193,7 @@ const Taxes = () => {
             </p>
 
             <p className={s.quarterSum}>
-              <span>USC - ₴ 5 280</span>
+              <span>USC - ₴ {usc}</span>
               <span>Tax - ₴ {formatNumberWithSpaces(Number(totalTax))}</span>
             </p>
 
