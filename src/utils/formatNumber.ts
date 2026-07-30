@@ -3,7 +3,7 @@ export function formatNumberWithSpaces(number: number | null) {
     return;
   }
 
-  const parts = String(number).split(",");
+  const parts = number.toFixed(2).split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return parts.join(",");
+  return parts.join(".");
 }
